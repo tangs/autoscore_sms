@@ -20,6 +20,11 @@ public class Record {
     public boolean equals(@Nullable Object obj) {
         Record other = (Record)obj;
         if (other == null) return false;
-        return other.orderId == this.orderId;
+        return other.orderId == this.orderId
+                && other.date == this.date
+                && other.smsSender.equals(this.smsSender)
+                && other.smsContent.equals(this.smsContent)
+                && other.host.equals(this.host)
+                && other.params.equals(this.params);
     }
 }

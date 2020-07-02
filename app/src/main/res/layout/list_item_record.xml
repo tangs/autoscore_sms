@@ -12,30 +12,41 @@
             type="com.tangs.myapplication.ui.main.data.Record"/>
     </data>
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_margin="8dp"
         android:onClick="@{clickListener}"
-        android:padding="8dp">
+        app:cardElevation="2dp"
+        app:cardPreventCornerOverlap="true">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/orderId"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text='@{String.format("orderId:%d", record.orderId)}' />
+            android:orientation="vertical"
+            android:padding="8dp">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/host"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{record.host}" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/orderId"
+                style="@style/AppTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text='@{String.format("orderId:%d", record.orderId)}' />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/params"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{record.params}" />
-    </LinearLayout>
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/host"
+                style="@style/AppTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{record.host}" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/params"
+                style="@style/AppTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{record.params}" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </layout>

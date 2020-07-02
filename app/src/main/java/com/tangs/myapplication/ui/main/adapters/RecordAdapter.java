@@ -1,14 +1,15 @@
 package com.tangs.myapplication.ui.main.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tangs.myapplication.R;
 import com.tangs.myapplication.databinding.ListItemRecordBinding;
 import com.tangs.myapplication.ui.main.data.Record;
 
@@ -28,7 +29,7 @@ public class RecordAdapter extends ListAdapter<Record, RecordAdapter.RecordViewH
             super(binding.getRoot());
             this.binding = binding;
             binding.setClickListener(v -> {
-                Log.i("aaaaa", "clicked.");
+                Navigation.findNavController(this.binding.getRoot()).navigate(R.id.action_view_fragment_to_record_detail_fragment);
             });
         }
 

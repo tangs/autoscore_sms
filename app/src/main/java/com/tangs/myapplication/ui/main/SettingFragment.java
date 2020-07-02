@@ -6,6 +6,9 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -19,9 +22,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.hjq.permissions.OnPermission;
-import com.hjq.permissions.Permission;
-import com.hjq.permissions.XXPermissions;
+//import com.hjq.permissions.OnPermission;
+//import com.hjq.permissions.Permission;
+//import com.hjq.permissions.XXPermissions;
 import com.tangs.myapplication.R;
 import com.tangs.myapplication.databinding.FragmentSettingBinding;
 import com.tangs.myapplication.ui.main.adapters.KArrayAdapter;
@@ -48,6 +51,7 @@ public class SettingFragment extends Fragment {
         SettingViewModelFactory mViewModelFactory = Injection.provideSettingViewModelFactory(context);
         viewModel = new ViewModelProvider(context, mViewModelFactory).get(SettingViewModel.class);
         binding.setViewmodel(viewModel);
+        setHasOptionsMenu(true);
         return binding.getRoot();
     }
 
@@ -64,6 +68,17 @@ public class SettingFragment extends Fragment {
         this.initPlatforms();
     }
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+//        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main_action, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
     private void initPlatforms() {
         ArrayAdapter<String> adapter = new KArrayAdapter<String>(
                 getContext(),
@@ -74,26 +89,26 @@ public class SettingFragment extends Fragment {
 
     private void init() {
         binding.getPhoneNumber.setOnClickListener(view -> {
-            if (XXPermissions.hasPermission(this.getContext(), Permission.READ_PHONE_NUMBERS)) {
-                getPhoneNumber();
-                return;
-            }
-            XXPermissions
-                    .with(this.getActivity())
-                    .permission(Permission.READ_PHONE_NUMBERS)
-                    .request(new OnPermission() {
-                        @Override
-                        public void hasPermission(List<String> granted, boolean all) {
-                            getPhoneNumber();
-                        }
-
-                        @Override
-                        public void noPermission(List<String> denied, boolean quick) {
-                            Toast.makeText(SettingFragment.this.getContext(),
-                                    "Can't get permission.",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    });
+//            if (XXPermissions.hasPermission(this.getContext(), Permission.READ_PHONE_NUMBERS)) {
+//                getPhoneNumber();
+//                return;
+//            }
+//            XXPermissions
+//                    .with(this.getActivity())
+//                    .permission(Permission.READ_PHONE_NUMBERS)
+//                    .request(new OnPermission() {
+//                        @Override
+//                        public void hasPermission(List<String> granted, boolean all) {
+//                            getPhoneNumber();
+//                        }
+//
+//                        @Override
+//                        public void noPermission(List<String> denied, boolean quick) {
+//                            Toast.makeText(SettingFragment.this.getContext(),
+//                                    "Can't get permission.",
+//                                    Toast.LENGTH_LONG).show();
+//                        }
+//                    });
         });
 //        binding.dataList.setAdapter();
         List<Record> list = new ArrayList<>();

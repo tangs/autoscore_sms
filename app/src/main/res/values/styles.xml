@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Customize your theme here. -->
 <!--        <item name="colorPrimary">@color/colorPrimary</item>-->
 <!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
@@ -9,5 +9,7 @@
     <style name="AppExposedDropdownMenu" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"/>
     <style name="AppTextInputLayout" parent="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"/>
     <style name="AppButton" parent="@style/Widget.MaterialComponents.Button.OutlinedButton"/>
+    <style name="AppTextView" parent="@style/Widget.MaterialComponents.TextView"/>
+
 
 </resources>

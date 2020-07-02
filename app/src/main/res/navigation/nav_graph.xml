@@ -3,11 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/SettingFragment">
+    app:startDestination="@id/setting_fragment">
+
     <fragment
-        android:id="@+id/SettingFragment"
+        android:id="@+id/setting_fragment"
         android:name="com.tangs.myapplication.ui.main.SettingFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/action_view_fragment_to_record_detail_fragment"
+            app:destination="@id/record_detail_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
+    <fragment
+        android:id="@+id/record_detail_fragment"
+        android:name="com.tangs.myapplication.ui.main.RecordDetailFragment"
+        android:label="record detail"
+        tools:layout="@layout/record_detail_fragment">
+<!--        <argument-->
+<!--            android:name="record"-->
+<!--            app:argType="com.tangs.myapplication.ui.main.data.Record" />-->
+    </fragment>
+
 </navigation>
