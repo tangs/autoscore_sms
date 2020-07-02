@@ -2,6 +2,7 @@ package com.tangs.myapplication.ui.main.data;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.UUID;
@@ -18,6 +19,7 @@ public class User {
     @ColumnInfo(name = "last_name")
     public String lastName;
 
+    @Ignore
     public User(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;

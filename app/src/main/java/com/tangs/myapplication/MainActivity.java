@@ -1,11 +1,11 @@
 package com.tangs.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
 
-import com.tangs.myapplication.ui.main.MainFragment;
-import com.tangs.myapplication.ui.main.data.AppDatabase;
+import com.tangs.myapplication.ui.main.SettingFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,10 +15,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
+                    .replace(R.id.container, new SettingFragment())
                     .commitNow();
         }
 
-
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
     }
 }

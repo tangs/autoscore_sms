@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">auto score sms</string>
     <string-array name="platforms">
     </string-array>
 </resources>

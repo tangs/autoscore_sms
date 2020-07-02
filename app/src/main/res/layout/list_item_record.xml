@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener"/>
+        <variable
+            name="record"
+            type="com.tangs.myapplication.ui.main.data.Record"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:onClick="@{clickListener}"
+        android:padding="8dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/orderId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text='@{String.format("orderId:%d", record.orderId)}' />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/host"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{record.host}" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/params"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{record.params}" />
+    </LinearLayout>
+
+</layout>
