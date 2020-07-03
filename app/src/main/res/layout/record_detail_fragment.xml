@@ -47,7 +47,7 @@
                     app:layout_collapseMode="pin"
                     app:contentInsetStartWithNavigation="0dp"
                     app:navigationIcon="@drawable/ic_detail_back"
-                    app:menu="@menu/main_action" />
+                    app:menu="@menu/detail_actions" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 

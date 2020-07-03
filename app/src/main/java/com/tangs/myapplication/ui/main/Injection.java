@@ -25,6 +25,6 @@ public class Injection {
 //        UserDataSource dataSource = provideUserDataSource(context);
         RecordDatabase database = RecordDatabase.getInstance(context);
         return new SettingViewModelFactory(new LocalRecordDataSource(database.recordDao()),
-                new LocalSharedPreferences(context));
+                LocalSharedPreferences.getInstance(context));
     }
 }

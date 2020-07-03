@@ -1,0 +1,22 @@
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="auto refresh"
+        app:actionLayout="@layout/action_autorefresh"
+        app:showAsAction="always|withText" />
+
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="dark"
+        app:actionLayout="@layout/action_dark"
+        app:showAsAction="ifRoom|withText" />
+
+    <item
+        android:id="@+id/action_clear"
+        android:title="clear" />
+
+</menu>

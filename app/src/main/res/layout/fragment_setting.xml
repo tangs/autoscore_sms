@@ -22,7 +22,7 @@
             android:background="?attr/colorPrimary"
             app:title="@string/app_name"
             app:titleTextColor="?attr/colorOnSurface"
-            app:menu="@menu/main_action"/>
+            app:menu="@menu/setting_actions"/>
 
         <LinearLayout
             android:layout_width="match_parent"

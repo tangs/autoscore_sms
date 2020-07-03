@@ -3,11 +3,11 @@ package com.tangs.myapplication.ui.main;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
@@ -28,6 +29,7 @@ import com.tangs.myapplication.R;
 import com.tangs.myapplication.databinding.FragmentSettingBinding;
 import com.tangs.myapplication.ui.main.adapters.KArrayAdapter;
 import com.tangs.myapplication.ui.main.adapters.RecordAdapter;
+import com.tangs.myapplication.ui.main.data.LocalSharedPreferences;
 import com.tangs.myapplication.ui.main.data.Record;
 import com.tangs.myapplication.ui.main.viewmodels.SettingViewModel;
 import com.tangs.myapplication.ui.main.viewmodels.SettingViewModelFactory;
@@ -55,6 +57,7 @@ public class SettingFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentSettingBinding.inflate(inflater, container, false);
         FragmentActivity context = this.getActivity();
+//        LocalSharedPreferences.getInstance(context).setDarkModeIfNotContains(isDark);
         SettingViewModelFactory mViewModelFactory = Injection.provideSettingViewModelFactory(context);
         viewModel = new ViewModelProvider(context, mViewModelFactory).get(SettingViewModel.class);
         binding.setViewmodel(viewModel);
@@ -65,9 +68,9 @@ public class SettingFragment extends Fragment {
                 .subscribe(records -> {
                             recordsAdapter.submitList(records);
                             recordsAdapter.notifyDataSetChanged();
-                            if (records.size() > 0)
-//                                binding.records.getLayoutManager().scrollToPosition(records.size() - 1);
+                            if (viewModel.getAutoRefreshValue() && records.size() > 0) {
                                 binding.records.smoothScrollToPosition(records.size() - 1);
+                            }
                         }, throwable -> {
                             Log.e("user", "Unable to update username", throwable);
                         }
@@ -91,6 +94,26 @@ public class SettingFragment extends Fragment {
     }
 
     public void initToolbar() {
+        SwitchMaterial autoRefresh = binding.toolbar.findViewById(R.id.action_auto_refresh);
+        SwitchMaterial dark = binding.toolbar.findViewById(R.id.action_dark);
+
+        viewModel.getDarkMode().observe(this, val -> {
+            if (val == dark.isChecked()) return;
+            dark.setChecked(val);
+        });
+        viewModel.getAutoRefresh().observe(this, val -> {
+            if (val == autoRefresh.isChecked()) return;
+            autoRefresh.setChecked(val);
+        });
+
+        dark.setOnCheckedChangeListener((button, val) -> {
+            viewModel.setDarkMode(val);
+            getActivity().recreate();
+        });
+        autoRefresh.setOnCheckedChangeListener((button, val) -> {
+            viewModel.setAutoRefresh(val);
+        });
+
         binding.toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.action_clear: {

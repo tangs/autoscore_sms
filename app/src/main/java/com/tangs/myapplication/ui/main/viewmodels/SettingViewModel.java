@@ -3,6 +3,7 @@ package com.tangs.myapplication.ui.main.viewmodels;
 import androidx.databinding.Bindable;
 import androidx.databinding.Observable;
 import androidx.databinding.PropertyChangeRegistry;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -28,6 +29,8 @@ public class SettingViewModel extends ViewModel implements Observable {
     private MutableLiveData<String> phone = new MutableLiveData<String>();
     private MutableLiveData<String> platform = new MutableLiveData<String>();
     private MutableLiveData<String> host = new MutableLiveData<String>();
+    private MutableLiveData<Boolean> darkMode = new MutableLiveData<Boolean>();
+    private MutableLiveData<Boolean> autoRefresh = new MutableLiveData<Boolean>();
 
     public SettingViewModel(RecordDataSource dataSource, LocalSharedPreferences localSharedPreferences) {
         this.dataSource = dataSource;
@@ -35,6 +38,8 @@ public class SettingViewModel extends ViewModel implements Observable {
         this.setHost(localSharedPreferences.getHost());
         this.setPhone(localSharedPreferences.getPhoneNumber());
         this.setPlatform(localSharedPreferences.getPlatform());
+        this.setAutoRefresh(localSharedPreferences.isAutoRefresh(false));
+        this.setDarkMode(localSharedPreferences.isDarkMode(false));
     }
 
     public void setPhone(String phone) {
@@ -68,6 +73,28 @@ public class SettingViewModel extends ViewModel implements Observable {
     @Bindable
     public String getHost() {
         return host.getValue();
+    }
+
+    public void setDarkMode(boolean isDark) {
+        localSharedPreferences.setDarkMode(isDark);
+        this.darkMode.setValue(isDark);
+    }
+
+    public LiveData<Boolean> getDarkMode() {
+        return darkMode;
+    }
+
+    public void setAutoRefresh(boolean autoRefresh) {
+        localSharedPreferences.setAutoRefresh(autoRefresh);
+        this.autoRefresh.setValue(autoRefresh);
+    }
+
+    public LiveData<Boolean> getAutoRefresh() {
+        return autoRefresh;
+    }
+
+    public boolean getAutoRefreshValue() {
+        return autoRefresh.getValue();
     }
 
     public Flowable<List<Record>> getRecords() {
