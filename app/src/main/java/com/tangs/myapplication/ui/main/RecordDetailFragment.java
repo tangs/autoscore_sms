@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.Navigation;
 
 import com.tangs.myapplication.R;
 import com.tangs.myapplication.databinding.RecordDetailFragmentBinding;
@@ -27,27 +28,25 @@ public class RecordDetailFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         binding = RecordDetailFragmentBinding.inflate(inflater, container, false);
-        FragmentActivity context = this.getActivity();
-//        binding.setRecord();
-
-//        setHasOptionsMenu(true);
+        binding.toolbar.setNavigationOnClickListener(view -> {
+            Navigation.findNavController(view).navigateUp();
+        });
         return binding.getRoot();
     }
 
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//        binding = null;
-//    }
-//
-//    @Override
-//    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-////        super.onCreateOptionsMenu(menu, inflater);
-//        inflater.inflate(R.menu.main_action, menu);
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.init();
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         return super.onOptionsItemSelected(item);
+    }
+
+    private void init() {
+        int orderId = this.getArguments().getInt("orderId", -1);
+        this.binding.toolbar.setTitle("order:" + orderId);
     }
 }

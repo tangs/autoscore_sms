@@ -24,9 +24,13 @@
         android:name="com.tangs.myapplication.ui.main.RecordDetailFragment"
         android:label="record detail"
         tools:layout="@layout/record_detail_fragment">
-<!--        <argument-->
-<!--            android:name="record"-->
-<!--            app:argType="com.tangs.myapplication.ui.main.data.Record" />-->
+        <argument
+            android:name="orderId"
+            android:defaultValue="-1"
+            app:argType="integer" />
+        <deepLink
+            android:id="@+id/deepLink"
+            app:uri="www.tangs.com/autoscore/{orderId}" />
     </fragment>
 
 </navigation>

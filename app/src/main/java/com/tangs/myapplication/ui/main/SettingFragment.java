@@ -5,9 +5,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +21,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-//import com.hjq.permissions.OnPermission;
-//import com.hjq.permissions.Permission;
-//import com.hjq.permissions.XXPermissions;
+import com.hjq.permissions.OnPermission;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
 import com.tangs.myapplication.R;
 import com.tangs.myapplication.databinding.FragmentSettingBinding;
 import com.tangs.myapplication.ui.main.adapters.KArrayAdapter;
@@ -33,14 +32,22 @@ import com.tangs.myapplication.ui.main.data.Record;
 import com.tangs.myapplication.ui.main.viewmodels.SettingViewModel;
 import com.tangs.myapplication.ui.main.viewmodels.SettingViewModelFactory;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class SettingFragment extends Fragment {
 
+    private final CompositeDisposable disposable = new CompositeDisposable();
     private FragmentSettingBinding binding;
     private SettingViewModel viewModel;
+
+    private RecordAdapter recordsAdapter = new RecordAdapter();
 
     @Nullable
     @Override
@@ -52,6 +59,19 @@ public class SettingFragment extends Fragment {
         viewModel = new ViewModelProvider(context, mViewModelFactory).get(SettingViewModel.class);
         binding.setViewmodel(viewModel);
         setHasOptionsMenu(true);
+        disposable.add(viewModel.getRecords()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(records -> {
+                            recordsAdapter.submitList(records);
+                            recordsAdapter.notifyDataSetChanged();
+                            if (records.size() > 0)
+//                                binding.records.getLayoutManager().scrollToPosition(records.size() - 1);
+                                binding.records.smoothScrollToPosition(records.size() - 1);
+                        }, throwable -> {
+                            Log.e("user", "Unable to update username", throwable);
+                        }
+                ));
         return binding.getRoot();
     }
 
@@ -59,6 +79,7 @@ public class SettingFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+        disposable.clear();
     }
 
     @Override
@@ -66,17 +87,29 @@ public class SettingFragment extends Fragment {
         super.onResume();
         this.init();
         this.initPlatforms();
+        this.initToolbar();
     }
 
-    @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.main_action, menu);
-    }
+    public void initToolbar() {
+        binding.toolbar.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.action_clear: {
+                    new MaterialAlertDialogBuilder(SettingFragment.this.getContext())
+                            .setTitle("Delete all records?")
+                            .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                                disposable.add(viewModel.deleteAll()
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        return super.onOptionsItemSelected(item);
+                                        }));
+                            })
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .show();
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
     private void initPlatforms() {
@@ -89,34 +122,35 @@ public class SettingFragment extends Fragment {
 
     private void init() {
         binding.getPhoneNumber.setOnClickListener(view -> {
-//            if (XXPermissions.hasPermission(this.getContext(), Permission.READ_PHONE_NUMBERS)) {
-//                getPhoneNumber();
-//                return;
-//            }
-//            XXPermissions
-//                    .with(this.getActivity())
-//                    .permission(Permission.READ_PHONE_NUMBERS)
-//                    .request(new OnPermission() {
-//                        @Override
-//                        public void hasPermission(List<String> granted, boolean all) {
-//                            getPhoneNumber();
-//                        }
-//
-//                        @Override
-//                        public void noPermission(List<String> denied, boolean quick) {
-//                            Toast.makeText(SettingFragment.this.getContext(),
-//                                    "Can't get permission.",
-//                                    Toast.LENGTH_LONG).show();
-//                        }
-//                    });
+            int id = new Random(new Date().getTime()).nextInt();
+            disposable.add(viewModel.insertRecord(new Record(id, "host", "params"))
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
+
+                    }));
+            if (true) return;
+            if (XXPermissions.hasPermission(this.getContext(), Permission.READ_PHONE_NUMBERS)) {
+                getPhoneNumber();
+                return;
+            }
+            XXPermissions
+                    .with(this.getActivity())
+                    .permission(Permission.READ_PHONE_NUMBERS)
+                    .request(new OnPermission() {
+                        @Override
+                        public void hasPermission(List<String> granted, boolean all) {
+                            getPhoneNumber();
+                        }
+
+                        @Override
+                        public void noPermission(List<String> denied, boolean quick) {
+                            Toast.makeText(SettingFragment.this.getContext(),
+                                    "Can't get permission.",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
         });
-//        binding.dataList.setAdapter();
-        List<Record> list = new ArrayList<>();
-        for (int i = 0; i < 1000; ++i)
-            list.add(new Record(i, "www.tangs.com", "a=" + i));
-        RecordAdapter adapter = new RecordAdapter();
-        adapter.submitList(list);
-        binding.records.setAdapter(adapter);
+        binding.records.setAdapter(recordsAdapter);
     }
 
     private void getPhoneNumber() {

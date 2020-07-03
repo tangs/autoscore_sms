@@ -1,5 +1,6 @@
 package com.tangs.myapplication.ui.main.adapters;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -29,7 +30,10 @@ public class RecordAdapter extends ListAdapter<Record, RecordAdapter.RecordViewH
             super(binding.getRoot());
             this.binding = binding;
             binding.setClickListener(v -> {
-                Navigation.findNavController(this.binding.getRoot()).navigate(R.id.action_view_fragment_to_record_detail_fragment);
+                Bundle bundle = new Bundle();
+                bundle.putInt("orderId", binding.getRecord().orderId);
+                Navigation.findNavController(this.binding.getRoot()).navigate(
+                        R.id.action_view_fragment_to_record_detail_fragment, bundle);
             });
         }
 

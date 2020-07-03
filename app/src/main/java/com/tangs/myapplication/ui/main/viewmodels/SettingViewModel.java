@@ -7,12 +7,21 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.tangs.myapplication.BR;
+import com.tangs.myapplication.ui.main.RecordDataSource;
 import com.tangs.myapplication.ui.main.UserDataSource;
 import com.tangs.myapplication.ui.main.data.LocalSharedPreferences;
+import com.tangs.myapplication.ui.main.data.Record;
+import com.tangs.myapplication.ui.main.data.RecordDatabase;
+import com.tangs.myapplication.ui.main.data.User;
+
+import java.util.List;
+
+import io.reactivex.Completable;
+import io.reactivex.Flowable;
 
 public class SettingViewModel extends ViewModel implements Observable {
-    // TODO: Implement the ViewModel
-    private final UserDataSource dataSource;
+
+    private final RecordDataSource dataSource;
     private final LocalSharedPreferences localSharedPreferences;
     private PropertyChangeRegistry callbacks = new PropertyChangeRegistry();
 
@@ -20,7 +29,7 @@ public class SettingViewModel extends ViewModel implements Observable {
     private MutableLiveData<String> platform = new MutableLiveData<String>();
     private MutableLiveData<String> host = new MutableLiveData<String>();
 
-    public SettingViewModel(UserDataSource dataSource, LocalSharedPreferences localSharedPreferences) {
+    public SettingViewModel(RecordDataSource dataSource, LocalSharedPreferences localSharedPreferences) {
         this.dataSource = dataSource;
         this.localSharedPreferences = localSharedPreferences;
         this.setHost(localSharedPreferences.getHost());
@@ -59,6 +68,22 @@ public class SettingViewModel extends ViewModel implements Observable {
     @Bindable
     public String getHost() {
         return host.getValue();
+    }
+
+    public Flowable<List<Record>> getRecords() {
+        return dataSource.getAll();
+    }
+
+    public Completable insertRecord(Record record) {
+        return dataSource.insert(record);
+    }
+
+    public Completable deleteRecord(Record record) {
+        return dataSource.delete(record);
+    }
+
+    public Completable deleteAll() {
+        return dataSource.deleteAll();
     }
 
     @Override

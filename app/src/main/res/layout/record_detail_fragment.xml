@@ -42,7 +42,7 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
+                    android:background="?attr/colorPrimary"
                     app:titleTextColor="?attr/colorOnSurface"
                     app:layout_collapseMode="pin"
                     app:contentInsetStartWithNavigation="0dp"
