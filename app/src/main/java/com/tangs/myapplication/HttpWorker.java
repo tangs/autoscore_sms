@@ -69,16 +69,19 @@ public class HttpWorker extends Worker {
             isSuccess = true;
         } catch (TimeoutException e) {
             record.state = Record.STATE_TIMEOUT;
-            record.errMsg = e.getMessage();
+            record.errMsg = "" + e.getMessage();
         } catch (Exception e) {
             record.state = Record.STATE_SEND_FAIL;
-            record.errMsg = e.getMessage();
+            record.errMsg = "" + e.getMessage();
         }
-        if (record.errMsg == null) record.errMsg = "";
         updateRecord();
-        if (!isSuccess && record.canRetry()) {
-            record.retry();
-            return doWork();
+        if (!isSuccess) {
+            if (record.canRetry()) {
+                record.retry();
+//                return Result.retry();
+                return doWork();
+            }
+            return Result.failure();
         }
         return Result.success();
     }
