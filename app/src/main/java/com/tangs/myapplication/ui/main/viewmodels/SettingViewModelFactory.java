@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.tangs.myapplication.ui.main.RecordDataSource;
-import com.tangs.myapplication.ui.main.UserDataSource;
 import com.tangs.myapplication.ui.main.data.LocalSharedPreferences;
 
 public class SettingViewModelFactory implements ViewModelProvider.Factory {

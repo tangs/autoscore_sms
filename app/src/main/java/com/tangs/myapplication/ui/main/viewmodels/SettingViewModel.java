@@ -9,11 +9,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.tangs.myapplication.BR;
 import com.tangs.myapplication.ui.main.RecordDataSource;
-import com.tangs.myapplication.ui.main.UserDataSource;
 import com.tangs.myapplication.ui.main.data.LocalSharedPreferences;
 import com.tangs.myapplication.ui.main.data.Record;
-import com.tangs.myapplication.ui.main.data.RecordDatabase;
-import com.tangs.myapplication.ui.main.data.User;
 
 import java.util.List;
 

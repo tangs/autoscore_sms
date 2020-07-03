@@ -1,12 +1,11 @@
 package com.tangs.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.res.Configuration;
 import android.os.Bundle;
 
-import com.tangs.myapplication.ui.main.SettingFragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.tangs.myapplication.ui.main.data.LocalSharedPreferences;
 
 public class MainActivity extends AppCompatActivity {

@@ -3,7 +3,6 @@ package com.tangs.myapplication.ui.main;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -29,8 +28,8 @@ import com.tangs.myapplication.R;
 import com.tangs.myapplication.databinding.FragmentSettingBinding;
 import com.tangs.myapplication.ui.main.adapters.KArrayAdapter;
 import com.tangs.myapplication.ui.main.adapters.RecordAdapter;
-import com.tangs.myapplication.ui.main.data.LocalSharedPreferences;
 import com.tangs.myapplication.ui.main.data.Record;
+import com.tangs.myapplication.ui.main.utilities.Injection;
 import com.tangs.myapplication.ui.main.viewmodels.SettingViewModel;
 import com.tangs.myapplication.ui.main.viewmodels.SettingViewModelFactory;
 

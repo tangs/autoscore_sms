@@ -1,9 +1,5 @@
 package com.tangs.myapplication.ui.main.adapters;
 
-import android.widget.TextView;
-
-import java.text.SimpleDateFormat;
-
 public class Converter {
 //    private static SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 //
