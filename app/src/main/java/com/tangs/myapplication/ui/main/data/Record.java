@@ -6,12 +6,19 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import java.text.SimpleDateFormat;
+
 @Entity(tableName = "record")
 public class Record {
+    public static final int STATE_UNINIT = -1;
     public static final int STATE_RES_OK = 0;
     public static final int STATE_WAIT_SERVER = 1;
     public static final int STATE_TIMEOUT = 2;
     public static final int STATE_SEND_FAIL = 3;
+
+
+    private static final SimpleDateFormat sdFormat =
+            new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     @PrimaryKey
     @ColumnInfo(name = "order_id")
@@ -73,11 +80,16 @@ public class Record {
 
     public String getStateDescribe() {
         switch (state) {
+            case STATE_UNINIT: return "uninitialized";
             case STATE_RES_OK: return "OK";
             case STATE_WAIT_SERVER: return "waiting";
             case STATE_TIMEOUT: return "timeout";
             case STATE_SEND_FAIL: return "fail";
         }
         return "err state:" + state;
+    }
+
+    public String getDate() {
+        return sdFormat.format(this.date);
     }
 }

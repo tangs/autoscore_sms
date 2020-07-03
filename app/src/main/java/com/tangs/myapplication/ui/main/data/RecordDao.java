@@ -21,10 +21,14 @@ public interface RecordDao {
     Flowable<Record> getRecord(int orderId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    Completable insert(Record user);
+    Completable insert(Record record);
+
+
+    @Query("DELETE FROM record WHERE order_id == :orderId")
+    Completable deleteByOrderId(int orderId);
 
     @Delete
-    Completable delete(Record user);
+    Completable delete(Record record);
 
     @Query("DELETE FROM record")
     Completable deleteAll();

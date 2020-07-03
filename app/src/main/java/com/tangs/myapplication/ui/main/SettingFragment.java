@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -87,8 +88,8 @@ public class SettingFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        this.initData();
         this.init();
-        this.initPlatforms();
         this.initToolbar();
     }
 
@@ -121,9 +122,7 @@ public class SettingFragment extends Fragment {
                             .setPositiveButton(android.R.string.ok, (dialog, which) -> {
                                 disposable.add(viewModel.deleteAll()
                                         .subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
-
-                                        }));
+                                        .subscribe());
                             })
                             .setNegativeButton(android.R.string.cancel, null)
                             .show();
@@ -134,12 +133,13 @@ public class SettingFragment extends Fragment {
         });
     }
 
-    private void initPlatforms() {
+    private void initData() {
         ArrayAdapter<String> adapter = new KArrayAdapter<String>(
                 getContext(),
                 R.layout.dropdown_menu_popup_item,
                 getResources().getStringArray(R.array.platforms));
         binding.filledExposedDropdown.setAdapter(adapter);
+        binding.records.setAdapter(recordsAdapter);
     }
 
     private void init() {
@@ -172,7 +172,6 @@ public class SettingFragment extends Fragment {
                         }
                     });
         });
-        binding.records.setAdapter(recordsAdapter);
     }
 
     private void getPhoneNumber() {

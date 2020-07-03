@@ -19,20 +19,20 @@
             android:id="@+id/appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fitsSystemWindows="true"
-            android:stateListAnimator="@animator/show_toolbar"
+            android:animateLayoutChanges="true"
             android:background="?attr/colorSurface"
-            android:animateLayoutChanges="true">
+            android:fitsSystemWindows="true"
+            android:stateListAnimator="@animator/show_toolbar">
 
             <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
-                app:contentScrim="?attr/colorSurface"
-                app:statusBarScrim="?attr/colorSurface"
                 app:collapsedTitleGravity="center"
+                app:contentScrim="?attr/colorSurface"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:statusBarScrim="?attr/colorSurface"
                 app:title="detail"
                 app:titleEnabled="false"
                 app:toolbarId="@id/toolbar">
@@ -43,57 +43,138 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?attr/colorPrimary"
-                    app:titleTextColor="?attr/colorOnSurface"
-                    app:layout_collapseMode="pin"
                     app:contentInsetStartWithNavigation="0dp"
+                    app:layout_collapseMode="pin"
+                    app:menu="@menu/detail_actions"
                     app:navigationIcon="@drawable/ic_detail_back"
-                    app:menu="@menu/detail_actions" />
+                    app:titleTextColor="?attr/colorOnSurface" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/orderId"
-            style="@style/AppTextView"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text='@{String.format("orderId:%d", record.orderId)}' />
+            android:layout_height="match_parent">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/host"
-            style="@style/AppTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{record.host}" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/params"
-            style="@style/AppTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{record.params}" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/orderId"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text='@{String.format("orderId:%d", record.orderId)}' />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/date"
-            style="@style/AppTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text='@{String.format("date:%d", record.date)}' />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/stateCode"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text='@{String.format("state code:%d", record.state)}' />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/smsSender"
-            style="@style/AppTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{record.smsSender}" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/state"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text='@{String.format("state:%s", record.getStateDescribe())}' />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/smsContent"
-            style="@style/AppTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@{record.smsContent}" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/date"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text='@{String.format("date:%s", record.getDate())}' />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/host"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text='@{String.format("host:%s", record.host)}' />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/params"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text='@{String.format("params:%s", record.params)}' />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/smsContent"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text='@{String.format("smsContent:%s", record.smsContent)}' />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/smsSender"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text='@{String.format("smsSender:%s", record.smsSender)}' />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/errMsg"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text='@{String.format("errMsg:%s", record.errMsg)}' />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/retryTime"
+                    style="@style/AppTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text='@{String.format("retryTime:%d", record.retryTime)}' />
+
+
+            </LinearLayout>
+        </ScrollView>
 
     </LinearLayout>
 </layout>

@@ -18,11 +18,6 @@ public class MainActivity extends AppCompatActivity {
         boolean isDark = LocalSharedPreferences.getInstance(this).isDarkMode(isDarkBySys);
         this.setTheme(isDark ? R.style.AppTheme_Dark : R.style.AppTheme);
         setContentView(R.layout.main_activity);
-//        if (savedInstanceState == null) {
-//            getSupportFragmentManager().beginTransaction()
-//                    .replace(R.id.container, new SettingFragment())
-//                    .commitNow();
-//        }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

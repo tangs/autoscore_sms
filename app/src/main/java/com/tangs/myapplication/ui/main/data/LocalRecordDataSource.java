@@ -36,6 +36,11 @@ public class LocalRecordDataSource implements RecordDataSource {
     }
 
     @Override
+    public Completable deleteByOrderId(int orderId) {
+        return recordDao.deleteByOrderId(orderId);
+    }
+
+    @Override
     public Completable deleteAll() {
         return recordDao.deleteAll();
     }
