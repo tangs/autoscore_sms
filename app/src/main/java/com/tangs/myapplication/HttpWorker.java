@@ -58,30 +58,29 @@ public class HttpWorker extends Worker {
         RequestFuture<String> future = RequestFuture.newFuture();
         StringRequest request = new StringRequest(Request.Method.GET, url, future, future);
         Volley.newRequestQueue(context).add(request);
-        Result result = Result.failure();
+//        Result result = Result.failure();
+        boolean isSuccess = false;
         try {
             future.get(10, TimeUnit.SECONDS);
             String response = future.get();
             record.state = Record.STATE_RES_OK;
             record.errMsg = "";
             dataSource.insert(record);
-            result = Result.success();
+            isSuccess = true;
         } catch (TimeoutException e) {
             record.state = Record.STATE_TIMEOUT;
             record.errMsg = e.getMessage();
-//            e.printStackTrace();
         } catch (Exception e) {
             record.state = Record.STATE_SEND_FAIL;
             record.errMsg = e.getMessage();
-//            e.printStackTrace();
-        } finally {
-            if (result.equals(Result.failure()) && record.canRetry()) {
-                record.retry();
-                doWork();
-            }
-            updateRecord();
         }
-        return result;
+        if (record.errMsg == null) record.errMsg = "";
+        updateRecord();
+        if (!isSuccess && record.canRetry()) {
+            record.retry();
+            return doWork();
+        }
+        return Result.success();
     }
 
     private void updateRecord() {

@@ -47,7 +47,7 @@
                     app:layout_collapseMode="pin"
                     app:menu="@menu/detail_actions"
                     app:navigationIcon="@drawable/ic_detail_back"
-                    app:titleTextColor="?attr/colorOnSurface" />
+                    app:titleTextColor="?attr/colorOnSurface"/>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -75,7 +75,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text='@{String.format("orderId:%d", record.orderId)}' />
+                        android:text='@{String.format("orderId:%d", record.orderId)}'/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/stateCode"
@@ -86,7 +86,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text='@{String.format("state code:%d", record.state)}' />
+                        android:text='@{String.format("state code:%d", record.state)}'/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/state"
@@ -97,7 +97,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text='@{String.format("state:%s", record.getStateDescribe())}' />
+                        android:text='@{String.format("state:%s", record.getStateDescribe())}'/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/date"
@@ -108,7 +108,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text='@{String.format("date:%s", record.getDate())}' />
+                        android:text='@{String.format("date:%s", record.getDate())}'/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/host"
@@ -119,7 +119,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text='@{String.format("host:%s", record.host)}' />
+                        android:text='@{String.format("host:%s", record.host)}'/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/params"
@@ -130,7 +130,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text='@{String.format("params:%s", record.params)}' />
+                        android:text='@{String.format("params:%s", record.params)}'/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/smsContent"
@@ -141,7 +141,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text='@{String.format("smsContent:%s", record.smsContent)}' />
+                        android:text='@{String.format("smsContent:%s", record.smsContent)}'/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/smsSender"
@@ -152,7 +152,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text='@{String.format("smsSender:%s", record.smsSender)}' />
+                        android:text='@{String.format("smsSender:%s", record.smsSender)}'/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/errMsg"
@@ -163,7 +163,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text='@{String.format("errMsg:%s", record.errMsg)}' />
+                        android:text='@{String.format("errMsg:%s", record.errMsg)}'/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/retryTime"
@@ -174,7 +174,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text='@{String.format("retryTime:%d", record.retryTime)}' />
+                        android:text='@{String.format("retryTime:%d", record.retryTime)}'/>
 
 
                 </LinearLayout>
@@ -186,7 +186,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:visibility="@{record.isWaiting() ? 0 : 4}" />
+                android:visibility="@{record.isWaiting() ? 0 : 4}"/>
 
         </FrameLayout>
 

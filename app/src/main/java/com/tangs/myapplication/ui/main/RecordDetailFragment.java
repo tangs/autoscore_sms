@@ -3,11 +3,13 @@ package com.tangs.myapplication.ui.main;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.view.menu.ActionMenuItemView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -48,6 +50,9 @@ public class RecordDetailFragment extends Fragment {
                             for (Record record : records) {
                                 if (record.orderId == orderId) {
                                     binding.setRecord(record);
+                                    ActionMenuItemView upload = binding.toolbar.findViewById(R.id.action_upload);
+                                    upload.setVisibility(record.isFailOrTimeout() ? View.VISIBLE
+                                            : View.GONE);
                                     return;
                                 }
                             }

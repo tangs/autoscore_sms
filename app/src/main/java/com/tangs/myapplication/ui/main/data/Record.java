@@ -6,7 +6,10 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.tangs.myapplication.ui.main.utilities.StringHelper;
+
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Entity(tableName = "record")
 public class Record {
@@ -27,6 +30,9 @@ public class Record {
     @ColumnInfo(name = "date")
     public long date;
 
+    @ColumnInfo(name = "state")
+    public int state = -1;
+
     @ColumnInfo(name = "sms_sender")
     public String smsSender = "";
 
@@ -38,9 +44,6 @@ public class Record {
 
     @ColumnInfo(name = "params")
     public String params = "";
-
-    @ColumnInfo(name = "state")
-    public int state = -1;
 
     @ColumnInfo(name = "err_msg")
     public String errMsg = "";
@@ -65,17 +68,19 @@ public class Record {
         if (other == null) return false;
         return other.orderId == this.orderId
                 && other.date == this.date
-                && other.smsSender.equals(this.smsSender)
-                && other.smsContent.equals(this.smsContent)
-                && other.host.equals(this.host)
-                && other.params.equals(this.params)
                 && other.state == this.state
-                && other.errMsg.equals(this.errMsg)
+                && StringHelper.equals(other.smsSender, this.smsSender)
+                && StringHelper.equals(other.smsContent, this.smsContent)
+                && StringHelper.equals(other.host, this.host)
+                && StringHelper.equals(other.params, this.params)
+                && StringHelper.equals(other.errMsg, this.errMsg)
                 && other.retryTime == this.retryTime;
     }
 
     public boolean isFailOrTimeout() {
-        return state == STATE_TIMEOUT || state == STATE_SEND_FAIL;
+        return state == STATE_TIMEOUT
+                || state == STATE_SEND_FAIL
+                || (state == STATE_WAIT_SERVER && new Date().getTime() - this.date > 60 * 1000);
     }
 
     public String getStateDescribe() {
@@ -106,6 +111,7 @@ public class Record {
     }
 
     public boolean isWaiting() {
-        return state == STATE_WAIT_SERVER;
+        return state == STATE_WAIT_SERVER
+                && new Date().getTime() - this.date < 60 * 1000;
     }
 }
