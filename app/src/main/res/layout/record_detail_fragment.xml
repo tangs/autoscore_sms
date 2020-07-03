@@ -53,128 +53,142 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <ScrollView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/orderId"
+                        style="@style/AppTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:text='@{String.format("orderId:%d", record.orderId)}' />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/stateCode"
+                        style="@style/AppTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:text='@{String.format("state code:%d", record.state)}' />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/state"
+                        style="@style/AppTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:text='@{String.format("state:%s", record.getStateDescribe())}' />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/date"
+                        style="@style/AppTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:text='@{String.format("date:%s", record.getDate())}' />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/host"
+                        style="@style/AppTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:text='@{String.format("host:%s", record.host)}' />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/params"
+                        style="@style/AppTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:text='@{String.format("params:%s", record.params)}' />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/smsContent"
+                        style="@style/AppTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:text='@{String.format("smsContent:%s", record.smsContent)}' />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/smsSender"
+                        style="@style/AppTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:text='@{String.format("smsSender:%s", record.smsSender)}' />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/errMsg"
+                        style="@style/AppTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:text='@{String.format("errMsg:%s", record.errMsg)}' />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/retryTime"
+                        style="@style/AppTextView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginBottom="8dp"
+                        android:text='@{String.format("retryTime:%d", record.retryTime)}' />
+
+
+                </LinearLayout>
+            </ScrollView>
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_gravity="center"
+                android:visibility="@{record.isWaiting() ? 0 : 4}" />
 
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/orderId"
-                    style="@style/AppTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text='@{String.format("orderId:%d", record.orderId)}' />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/stateCode"
-                    style="@style/AppTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text='@{String.format("state code:%d", record.state)}' />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/state"
-                    style="@style/AppTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text='@{String.format("state:%s", record.getStateDescribe())}' />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/date"
-                    style="@style/AppTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text='@{String.format("date:%s", record.getDate())}' />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/host"
-                    style="@style/AppTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text='@{String.format("host:%s", record.host)}' />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/params"
-                    style="@style/AppTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text='@{String.format("params:%s", record.params)}' />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/smsContent"
-                    style="@style/AppTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text='@{String.format("smsContent:%s", record.smsContent)}' />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/smsSender"
-                    style="@style/AppTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text='@{String.format("smsSender:%s", record.smsSender)}' />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/errMsg"
-                    style="@style/AppTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text='@{String.format("errMsg:%s", record.errMsg)}' />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/retryTime"
-                    style="@style/AppTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text='@{String.format("retryTime:%d", record.retryTime)}' />
-
-
-            </LinearLayout>
-        </ScrollView>
+        </FrameLayout>
 
     </LinearLayout>
 </layout>

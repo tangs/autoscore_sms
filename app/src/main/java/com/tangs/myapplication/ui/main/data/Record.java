@@ -34,7 +34,7 @@ public class Record {
     public String smsContent = "";
 
     @ColumnInfo(name = "host")
-    public String host = "";
+    public String host = "http://39.154.62.72:80";   // TODO test code.
 
     @ColumnInfo(name = "params")
     public String params = "";
@@ -91,5 +91,21 @@ public class Record {
 
     public String getDate() {
         return sdFormat.format(this.date);
+    }
+
+    public String getUrl() {
+        return host + "?" + params;
+    }
+
+    public boolean canRetry() {
+        return retryTime < 3;
+    }
+
+    public void retry() {
+        ++retryTime;
+    }
+
+    public boolean isWaiting() {
+        return state == STATE_WAIT_SERVER;
     }
 }

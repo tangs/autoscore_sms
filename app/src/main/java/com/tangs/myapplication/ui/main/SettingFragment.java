@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,6 +24,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
+import com.tangs.myapplication.BuildConfig;
 import com.tangs.myapplication.R;
 import com.tangs.myapplication.databinding.FragmentSettingBinding;
 import com.tangs.myapplication.ui.main.adapters.KArrayAdapter;
@@ -62,19 +62,6 @@ public class SettingFragment extends Fragment {
         viewModel = new ViewModelProvider(context, mViewModelFactory).get(SettingViewModel.class);
         binding.setViewmodel(viewModel);
         setHasOptionsMenu(true);
-        disposable.add(viewModel.getRecords()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(records -> {
-                            recordsAdapter.submitList(records);
-                            recordsAdapter.notifyDataSetChanged();
-                            if (viewModel.getAutoRefreshValue() && records.size() > 0) {
-                                binding.records.smoothScrollToPosition(records.size() - 1);
-                            }
-                        }, throwable -> {
-                            Log.e("user", "Unable to update username", throwable);
-                        }
-                ));
         return binding.getRoot();
     }
 
@@ -134,6 +121,19 @@ public class SettingFragment extends Fragment {
     }
 
     private void initData() {
+        disposable.add(viewModel.getRecords()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(records -> {
+                            recordsAdapter.submitList(records);
+                            recordsAdapter.notifyDataSetChanged();
+                            if (viewModel.getAutoRefreshValue() && records.size() > 0) {
+                                binding.records.smoothScrollToPosition(records.size() - 1);
+                            }
+                        }, throwable -> {
+                            Log.e("user", "Unable to update username", throwable);
+                        }
+                ));
         ArrayAdapter<String> adapter = new KArrayAdapter<String>(
                 getContext(),
                 R.layout.dropdown_menu_popup_item,
@@ -144,13 +144,15 @@ public class SettingFragment extends Fragment {
 
     private void init() {
         binding.getPhoneNumber.setOnClickListener(view -> {
-            int id = new Random(new Date().getTime()).nextInt();
-            disposable.add(viewModel.insertRecord(new Record(id, "host", "params"))
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
+            if (BuildConfig.DEBUG) {
+                int id = new Random(new Date().getTime()).nextInt();
+                disposable.add(viewModel.insertRecord(new Record(id, "host", "params"))
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
 
-                    }));
-            if (true) return;
+                        }));
+                if (true) return;
+            }
             if (XXPermissions.hasPermission(this.getContext(), Permission.READ_PHONE_NUMBERS)) {
                 getPhoneNumber();
                 return;

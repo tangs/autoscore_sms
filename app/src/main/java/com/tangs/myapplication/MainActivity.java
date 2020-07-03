@@ -2,11 +2,18 @@ package com.tangs.myapplication;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.hjq.permissions.OnPermission;
+import com.hjq.permissions.Permission;
+import com.hjq.permissions.XXPermissions;
 import com.tangs.myapplication.ui.main.data.LocalSharedPreferences;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -21,5 +28,25 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (!XXPermissions.hasPermission(this, Permission.RECEIVE_SMS)) {
+            XXPermissions
+                    .with(this)
+                    .permission(Permission.RECEIVE_SMS)
+                    .request(new OnPermission() {
+                        @Override
+                        public void hasPermission(List<String> granted, boolean all) {
+                            Toast.makeText(MainActivity.this,
+                                    "Get permission success.",
+                                    Toast.LENGTH_LONG).show();
+                        }
+
+                        @Override
+                        public void noPermission(List<String> denied, boolean quick) {
+                            Toast.makeText(MainActivity.this,
+                                    "Can't get permission.",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }
     }
 }
