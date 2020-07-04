@@ -1,4 +1,18 @@
-<resources>
-    <string-array name="platforms">
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string-array name="platforms" tools:ignore="InconsistentArrays">
+        <item>"缅甸2"</item>
+        <item>"缅甸5"</item>
+        <item>"缅甸6"</item>
+        <item>"缅甸7"</item>
+        <item>"缅甸8"</item>
+        <item>"缅甸9"</item>
+        <item>"缅甸10"</item>
+        <item>"泰国1"</item>
+        <item>"泰国2"</item>
+        <item>"泰国3"</item>
+        <item>"泰国4"</item>
+        <item>"泰国5"</item>
+        <item>"泰国6"</item>
+        <item>"泰国7"</item>
     </string-array>
 </resources>

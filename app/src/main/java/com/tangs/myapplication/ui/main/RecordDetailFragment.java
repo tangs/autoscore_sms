@@ -22,6 +22,8 @@ import com.tangs.myapplication.ui.main.utilities.Injection;
 import com.tangs.myapplication.ui.main.viewmodels.RecordDetailViewModel;
 import com.tangs.myapplication.ui.main.viewmodels.RecordDetailViewModelFactory;
 
+import java.util.Date;
+
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
@@ -83,6 +85,21 @@ public class RecordDetailFragment extends Fragment {
         });
         binding.toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
+                case R.id.action_upload: {
+                    Record record = binding.getRecord();
+                    if (record == null) return true;
+                    record.retryTime = 0;
+                    record.lastUpdateTime = new Date().getTime();
+                    disposable.add(viewModel.updateRecord(record)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(() -> {
+                                record.upload(getContext());
+                            }, throwable -> {
+                                throwable.printStackTrace();
+                            }));
+                    return true;
+                }
                 case R.id.action_delete: {
                     new MaterialAlertDialogBuilder(this.getContext())
                             .setTitle("Delete this record?")

@@ -1,5 +1,8 @@
 package com.tangs.myapplication.ui.main.data;
 
+import android.content.Context;
+import android.content.Intent;
+
 import androidx.annotation.Nullable;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -7,10 +10,13 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.tangs.myapplication.BuildConfig;
+import com.tangs.myapplication.UploadService;
 import com.tangs.myapplication.ui.main.utilities.StringHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import io.reactivex.disposables.CompositeDisposable;
 
 @Entity(tableName = "record")
 public class Record {
@@ -31,6 +37,9 @@ public class Record {
     @ColumnInfo(name = "date")
     public long date;
 
+    @ColumnInfo(name = "last_update_time")
+    public long lastUpdateTime;
+
     @ColumnInfo(name = "state")
     public int state = -1;
 
@@ -45,6 +54,9 @@ public class Record {
 
     @ColumnInfo(name = "params")
     public String params = "";
+
+    @ColumnInfo(name = "response_msg")
+    public String responseMsg = "";
 
     @ColumnInfo(name = "err_msg")
     public String errMsg = "";
@@ -78,6 +90,7 @@ public class Record {
         if (other == null) return false;
         return other.orderId == this.orderId
                 && other.date == this.date
+                && other.lastUpdateTime == this.lastUpdateTime
                 && other.state == this.state
                 && StringHelper.equals(other.smsSender, this.smsSender)
                 && StringHelper.equals(other.smsContent, this.smsContent)
@@ -90,7 +103,7 @@ public class Record {
     public boolean isFailOrTimeout() {
         return state == STATE_TIMEOUT
                 || state == STATE_SEND_FAIL
-                || (state == STATE_WAIT_SERVER && new Date().getTime() - this.date > 60 * 1000);
+                || (state == STATE_WAIT_SERVER && new Date().getTime() - this.lastUpdateTime > 60 * 1000);
     }
 
     public String getStateDescribe() {
@@ -118,8 +131,13 @@ public class Record {
         return sdFormat.format(this.date);
     }
 
+    public String geLastUpdateTime() {
+        return sdFormat.format(this.lastUpdateTime);
+    }
+
     public String getUrl() {
         if (BuildConfig.DEBUG) {
+//            return "http://39.154.62.72:80?" + params;
             return "http://192.168.1.101:5678?" + params;
         }
         return host + "?" + params;
@@ -135,6 +153,14 @@ public class Record {
 
     public boolean isWaiting() {
         return state == STATE_WAIT_SERVER
-                && new Date().getTime() - this.date < 60 * 1000;
+                && new Date().getTime() - this.lastUpdateTime < 60 * 1000;
+    }
+
+    public void upload(Context context) {
+        Intent intent = new Intent(context, UploadService.class);
+        intent.putExtra("sender", smsSender);
+        intent.putExtra("body", smsContent);
+        intent.putExtra("orderId", orderId);
+        context.startService(intent);
     }
 }

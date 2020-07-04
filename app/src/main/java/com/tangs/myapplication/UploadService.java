@@ -77,14 +77,17 @@ public class UploadService extends Service {
             try {
                 future.get(10, TimeUnit.SECONDS);
                 String response = future.get();
+                record.responseMsg = response;
                 record.state = Record.STATE_RES_OK;
                 record.errMsg = "";
                 dataSource.insert(record);
                 isSuccess = true;
             } catch (TimeoutException e) {
+                record.responseMsg = "";
                 record.state = Record.STATE_TIMEOUT;
                 record.errMsg = "" + e.getMessage();
             } catch (Exception e) {
+                record.responseMsg = "";
                 record.state = Record.STATE_SEND_FAIL;
                 record.errMsg = "" + e.getMessage();
             }
@@ -143,33 +146,34 @@ public class UploadService extends Service {
 
                 params.put("terminal", phone);
                 params.put("pay_id", "" + orderId);
-                params.put("url", server.url);
+//                params.put("url", server.url);
+
+                int sequenceId = orderId;
+                disposable.add(dataSource.getRecord(sequenceId)
+                        .subscribeOn(Schedulers.io())
+                        .switchIfEmpty(Single.defer(() -> Single.just(Record.Empty())))
+                        .subscribe(record1 -> {
+                            if (record1.isEmpty) {
+                                record1 = new Record();
+                                record1.orderId = sequenceId;
+                                record1.date = new Date().getTime();
+                                record1.lastUpdateTime = record1.date;
+                                record1.state = Record.STATE_WAIT_SERVER;
+                                record1.smsSender = sender;
+                                record1.smsContent = body;
+                                record1.host = server.url;
+                                record1.params = StringHelper.convertWithIteration(params);
+                            }
+                            record.set(record1);
+                            notifyToServer(context, disposable, dataSource, record.get(), msg.arg1);
+                        }, throwable -> {
+                            throwable.printStackTrace();
+                            stopSelf(msg.arg1);
+                        }));
             } catch (Exception e) {
                 stopSelf(msg.arg1);
                 return;
             }
-
-            int sequenceId = orderId;
-            disposable.add(dataSource.getRecord(sequenceId)
-                    .subscribeOn(Schedulers.io())
-                    .switchIfEmpty(Single.defer(() -> Single.just(Record.Empty())))
-                    .subscribe(record1 -> {
-                        if (record1.isEmpty) {
-                            record1 = new Record();
-                            record1.orderId = sequenceId;
-                            record1.date = new Date().getTime();
-                            record1.state = Record.STATE_WAIT_SERVER;
-                            record1.smsSender = sender;
-                            record1.smsContent = body;
-                            record1.host = params.get("url");
-                            record1.params = StringHelper.convertWithIteration(params);
-                        }
-                        record.set(record1);
-                        notifyToServer(context, disposable, dataSource, record.get(), msg.arg1);
-                    }, throwable -> {
-                        throwable.printStackTrace();
-                        stopSelf(msg.arg1);
-                    }));
         }
     }
 
@@ -180,7 +184,7 @@ public class UploadService extends Service {
         // main thread, which we don't want to block. We also make it
         // background priority so CPU-intensive work doesn't disrupt our UI.
         HandlerThread thread = new HandlerThread("ServiceStartArguments",
-                Process.THREAD_PRIORITY_BACKGROUND);
+                Process.THREAD_PRIORITY_FOREGROUND);
         thread.start();
 
         // Get the HandlerThread's Looper and use it for our Handler
@@ -196,6 +200,7 @@ public class UploadService extends Service {
         // start ID so we know which request we're stopping when we finish the job
         String sender = intent.getStringExtra("sender");
         String body = intent.getStringExtra("body");
+        int orderId = intent.getIntExtra("orderId", -1);
         if (StringHelper.checksNullOrEmpty(sender, body)) {
             stopSelf(startId);
             return START_NOT_STICKY;
@@ -204,6 +209,7 @@ public class UploadService extends Service {
         Bundle bundle = new Bundle();
         bundle.putString("sender", sender);
         bundle.putString("body", body);
+        bundle.putInt("orderId", orderId);
         Message msg = serviceHandler.obtainMessage();
         msg.obj = this;
         msg.arg1 = startId;
