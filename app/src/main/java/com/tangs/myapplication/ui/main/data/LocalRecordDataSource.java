@@ -6,6 +6,7 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 
 public class LocalRecordDataSource implements RecordDataSource {
 
@@ -21,7 +22,7 @@ public class LocalRecordDataSource implements RecordDataSource {
     }
 
     @Override
-    public Flowable<Record> getRecord(int orderId) {
+    public Maybe<Record> getRecord(int orderId) {
         return recordDao.getRecord(orderId);
     }
 

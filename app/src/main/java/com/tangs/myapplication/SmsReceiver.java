@@ -1,13 +1,16 @@
 package com.tangs.myapplication;
 
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
@@ -16,6 +19,7 @@ public class SmsReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
         if (intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
@@ -37,15 +41,7 @@ public class SmsReceiver extends BroadcastReceiver {
                             bodyBuffer.delete(0, bodyBuffer.length());
                             Log.i("received sms", str);
 
-//                            notifyActivity(context, msgFrom, str);
-                            Data data = new Data.Builder()
-                                    .putString("sender", msgFrom)
-                                    .putString("body", str)
-                                    .build();
-                            OneTimeWorkRequest request = new OneTimeWorkRequest
-                                    .Builder(HttpWorker.class)
-                                    .setInputData(data).build();
-                            WorkManager.getInstance(context).enqueue(request);
+                            notifyActivity(context, msgFrom, str);
 
                             sender = msgFrom;
                             if (!isLast) bodyBuffer.append(msgBody);
@@ -61,16 +57,10 @@ public class SmsReceiver extends BroadcastReceiver {
         }
     }
 
-    private void notifyActivity(Context context, String msgFrom, String str)
-            throws PendingIntent.CanceledException {
-        Intent intentCall = new Intent(context, MainActivity.class);
-        intentCall.putExtra("sms", true);
-        intentCall.putExtra("sender", msgFrom);
-        intentCall.putExtra("body", str);
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,
-                0, intentCall,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        pendingIntent.send();
+    private void notifyActivity(Context context, String msgFrom, String body) {
+        Intent intent = new Intent(context, UploadService.class);
+        intent.putExtra("sender", msgFrom);
+        intent.putExtra("body", body);
+        context.startService(intent);
     }
 }

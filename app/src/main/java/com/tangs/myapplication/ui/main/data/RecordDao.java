@@ -10,6 +10,7 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 
 @Dao
 public interface RecordDao {
@@ -18,11 +19,10 @@ public interface RecordDao {
     Flowable<List<Record>> getAll();
 
     @Query("SELECT * FROM record WHERE order_id == :orderId")
-    Flowable<Record> getRecord(int orderId);
+    Maybe<Record> getRecord(int orderId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insert(Record record);
-
 
     @Query("DELETE FROM record WHERE order_id == :orderId")
     Completable deleteByOrderId(int orderId);

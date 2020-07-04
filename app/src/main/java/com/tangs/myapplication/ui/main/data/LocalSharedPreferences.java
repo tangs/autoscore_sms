@@ -5,11 +5,12 @@ import android.content.SharedPreferences;
 
 public class LocalSharedPreferences {
     private static final String DATABASE_NAME = "info";
-    private static final String KEY_PHONE_NUMBER = "phoneNumber";
+    private static final String KEY_PHONE_NUMBER = "phone_number";
     private static final String KEY_PLATFORM = "platform";
     private static final String KEY_HOST = "host";
     private static final String KEY_DARK_MODE = "dark_mode";
     private static final String KEY_AUTO_REFRESH = "auto_refresh";
+    private static final String KEY_SMS_SEQUENCE_ID = "sms_sequence_id";
 
     private static LocalSharedPreferences localSharedPreferences;
     private SharedPreferences sharedPreferences;
@@ -26,7 +27,7 @@ public class LocalSharedPreferences {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        sharedPreferences.edit().putString(KEY_PHONE_NUMBER, phoneNumber).commit();
+        sharedPreferences.edit().putString(KEY_PHONE_NUMBER, phoneNumber).apply();
     }
 
     public String getPhoneNumber() {
@@ -34,7 +35,7 @@ public class LocalSharedPreferences {
     }
 
     public void setPlatform(String platform) {
-        sharedPreferences.edit().putString(KEY_PLATFORM, platform).commit();
+        sharedPreferences.edit().putString(KEY_PLATFORM, platform).apply();
     }
 
     public String getPlatform() {
@@ -42,7 +43,7 @@ public class LocalSharedPreferences {
     }
 
     public void setHost(String host) {
-        sharedPreferences.edit().putString(KEY_HOST, host).commit();
+        sharedPreferences.edit().putString(KEY_HOST, host).apply();
     }
 
     public String getHost() {
@@ -55,7 +56,7 @@ public class LocalSharedPreferences {
 //    }
 
     public void setDarkMode(boolean isDark) {
-        sharedPreferences.edit().putBoolean(KEY_DARK_MODE, isDark).commit();
+        sharedPreferences.edit().putBoolean(KEY_DARK_MODE, isDark).apply();
     }
 
     public boolean isDarkMode(boolean def) {
@@ -63,10 +64,22 @@ public class LocalSharedPreferences {
     }
 
     public void setAutoRefresh(boolean autoRefresh) {
-        sharedPreferences.edit().putBoolean(KEY_AUTO_REFRESH, autoRefresh).commit();
+        sharedPreferences.edit().putBoolean(KEY_AUTO_REFRESH, autoRefresh).apply();
     }
 
     public boolean isAutoRefresh(boolean def) {
         return sharedPreferences.getBoolean(KEY_AUTO_REFRESH, def);
+    }
+
+    public int getSmsSequenceId() {
+        return sharedPreferences.getInt(KEY_SMS_SEQUENCE_ID, 1);
+    }
+
+    public void setSmsSequenceId(int smsSequenceId) {
+        sharedPreferences.edit().putInt(KEY_SMS_SEQUENCE_ID, smsSequenceId).apply();
+    }
+
+    public void smsSequenceIdIncrease() {
+        setSmsSequenceId((getSmsSequenceId() + 1) % 2000000000);
     }
 }

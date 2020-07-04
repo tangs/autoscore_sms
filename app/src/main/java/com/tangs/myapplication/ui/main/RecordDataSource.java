@@ -6,12 +6,13 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
+import io.reactivex.Maybe;
 
 public interface RecordDataSource {
 
     Flowable<List<Record>> getAll();
 
-    Flowable<Record> getRecord(int orderId);
+    Maybe<Record> getRecord(int orderId);
 
     Completable insert(Record record);
 

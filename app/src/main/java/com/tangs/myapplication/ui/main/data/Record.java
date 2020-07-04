@@ -51,6 +51,15 @@ public class Record {
     @ColumnInfo(name = "retry_time")
     public int retryTime;
 
+    @Ignore
+    public boolean isEmpty;
+
+    public static Record Empty() {
+        Record record = new Record();
+        record.isEmpty = true;
+        return record;
+    }
+
     public Record() {
 
     }
