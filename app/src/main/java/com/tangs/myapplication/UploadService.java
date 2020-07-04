@@ -38,9 +38,6 @@ public class UploadService extends Service {
     private Looper serviceLooper;
     private ServiceHandler serviceHandler;
 
-//    private static int sequenceId = 1;
-
-    // Handler that receives messages from the thread
     private final class ServiceHandler extends Handler {
 
         public ServiceHandler(Looper looper) {
@@ -101,7 +98,6 @@ public class UploadService extends Service {
         @Override
         public void handleMessage(Message msg) {
             Context context = (Context)msg.obj;
-//            int sequenceId = sharedPreferences.getSmsSequnceId();
             Bundle bundle = msg.getData();
             int orderId = bundle.getInt("orderId", -1);
             if (orderId == -1) {

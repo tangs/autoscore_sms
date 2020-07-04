@@ -1,0 +1,102 @@
+{
+  "servers": {
+    "泰国1": {
+      "url": "http://18.140.97.213/api/pay/payinfo",
+      "platforms": [
+        "9001"
+      ]
+    },
+    "泰国2": {
+      "url": "http://54.169.195.169/api/pay/payinfo",
+      "platforms": [
+        "9001"
+      ]
+    },
+    "泰国3": {
+      "url": "http://54.179.134.88/api/pay/payinfo",
+      "platforms": [
+        "9001"
+      ]
+    },
+    "泰国4": {
+      "url": "http://13.251.47.16/api/pay/payinfo",
+      "platforms": [
+        "9001"
+      ]
+    },
+    "泰国5": {
+      "url": "http://13.251.100.212/api/pay/payinfo",
+      "platforms": [
+        "9001"
+      ]
+    },
+    "泰国6": {
+      "url": "http://54.251.131.163/api/pay/payinfo",
+      "platforms": [
+        "9001"
+      ]
+    },
+    "泰国7": {
+      "url": "http://18.136.5.149/api/pay/payinfo",
+      "platforms": [
+        "9001"
+      ]
+    },
+    "缅甸2": {
+      "url": "http://18.138.53.121/api/pay/payinfo",
+      "platforms": [
+        "9002",
+        "9003",
+        "9004"
+      ]
+    },
+    "缅甸5": {
+      "url": "http://52.221.227.225/api/pay/payinfo",
+      "platforms": [
+        "9002",
+        "9003",
+        "9004"
+      ]
+    },
+    "缅甸6": {
+      "url": "http://18.140.251.182/api/pay/payinfo",
+      "platforms": [
+        "9002",
+        "9003",
+        "9004"
+      ]
+    },
+    "缅甸7": {
+      "url": "http://52.76.40.187/api/pay/payinfo",
+      "platforms": [
+        "9002",
+        "9003",
+        "9004"
+      ]
+    },
+    "缅甸8": {
+      "url": "http://18.138.189.1/api/pay/payinfo",
+      "platforms": [
+        "9002",
+        "9003",
+        "9004"
+      ]
+    },
+    "缅甸9": {
+      "url": "http://18.138.6.186/api/pay/payinfo",
+      "platforms": [
+        "9002",
+        "9003",
+        "9004"
+      ]
+    },
+    "缅甸10": {
+      "url": "http://13.229.21.39/api/pay/payinfo",
+      "platforms": [
+        "9002",
+        "9003",
+        "9004"
+      ]
+    }
+  }
+}

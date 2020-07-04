@@ -18,7 +18,6 @@ import com.tangs.myapplication.ui.main.data.Record;
 import com.tangs.myapplication.ui.main.data.RecordDatabase;
 
 import java.util.Date;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 

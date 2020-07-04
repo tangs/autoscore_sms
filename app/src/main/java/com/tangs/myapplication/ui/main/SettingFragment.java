@@ -15,6 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.databinding.Observable;
+import androidx.databinding.library.baseAdapters.BR;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -30,7 +32,10 @@ import com.tangs.myapplication.databinding.FragmentSettingBinding;
 import com.tangs.myapplication.ui.main.adapters.KArrayAdapter;
 import com.tangs.myapplication.ui.main.adapters.RecordAdapter;
 import com.tangs.myapplication.ui.main.data.Record;
+import com.tangs.myapplication.ui.main.data.config.Config;
+import com.tangs.myapplication.ui.main.data.config.Server;
 import com.tangs.myapplication.ui.main.utilities.Injection;
+import com.tangs.myapplication.ui.main.utilities.StringHelper;
 import com.tangs.myapplication.ui.main.viewmodels.SettingViewModel;
 import com.tangs.myapplication.ui.main.viewmodels.SettingViewModelFactory;
 
@@ -143,16 +148,21 @@ public class SettingFragment extends Fragment {
     }
 
     private void init() {
-        binding.getPhoneNumber.setOnClickListener(view -> {
-            if (BuildConfig.DEBUG) {
-                int id = new Random(new Date().getTime()).nextInt();
-                disposable.add(viewModel.insertRecord(new Record(id, "host", "params"))
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread()).subscribe(() -> {
-
-                        }));
-                if (true) return;
+        viewModel.addOnPropertyChangedCallback(new Observable.OnPropertyChangedCallback() {
+            @Override
+            public void onPropertyChanged(Observable sender, int propertyId) {
+                if (propertyId == BR.platform) {
+                    viewModel.setHost("");
+                    String platform = viewModel.getPlatform();
+                    if (StringHelper.checkNullOrEmpty(platform)) return;
+                    Server server = Config.getInstance(SettingFragment.this.getContext())
+                            .geServer(platform);
+                    if (server == null) return;
+                    viewModel.setHost(server.url);
+                }
             }
+        });
+        binding.getPhoneNumber.setOnClickListener(view -> {
             if (XXPermissions.hasPermission(this.getContext(), Permission.READ_PHONE_NUMBERS)) {
                 getPhoneNumber();
                 return;

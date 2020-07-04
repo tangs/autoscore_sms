@@ -86,7 +86,7 @@
                         android:layout_marginTop="8dp"
                         android:layout_marginRight="16dp"
                         android:layout_marginBottom="8dp"
-                        android:text='@{String.format("state code:%d", record.state)}'/>
+                        android:text='@{String.format("state:%s", record.getStateAlert())}'/>
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/state"

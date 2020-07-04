@@ -47,7 +47,7 @@
                     style="@style/AppTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text='@{String.format("state:%d", record.state)}'/>
+                    android:text='@{String.format("state:%s", record.getStateAlert())}'/>
 
             </LinearLayout>
 

@@ -97,10 +97,20 @@ public class Record {
             case STATE_UNINIT: return "uninitialized";
             case STATE_RES_OK: return "OK";
             case STATE_WAIT_SERVER: return "waiting";
-            case STATE_TIMEOUT: return "timeout";
-            case STATE_SEND_FAIL: return "fail";
+            case STATE_TIMEOUT: return "timeout️";
+            case STATE_SEND_FAIL: return "fail️";
         }
         return "err state:" + state;
+    }
+
+    public String getStateAlert() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(state);
+        switch (state) {
+            case STATE_TIMEOUT:
+            case STATE_SEND_FAIL: buffer.append("(\uD83D\uDC94)");
+        }
+        return buffer.toString();
     }
 
     public String getDate() {

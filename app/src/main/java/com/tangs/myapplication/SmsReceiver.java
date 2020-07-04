@@ -1,19 +1,11 @@
 package com.tangs.myapplication;
 
-import android.app.Notification;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
-
-import androidx.annotation.RequiresApi;
-import androidx.work.Data;
-import androidx.work.OneTimeWorkRequest;
-import androidx.work.WorkManager;
 
 public class SmsReceiver extends BroadcastReceiver {
 
