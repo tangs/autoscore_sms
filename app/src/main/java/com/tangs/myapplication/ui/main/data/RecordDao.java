@@ -15,7 +15,7 @@ import io.reactivex.Maybe;
 @Dao
 public interface RecordDao {
 
-    @Query("SELECT * FROM record ORDER BY date LIMIT 1000")
+    @Query("SELECT * FROM (SELECT * FROM record ORDER BY date DESC LIMIT 1000) sub ORDER BY date ASC")
     Flowable<List<Record>> getAll();
 
     @Query("SELECT * FROM record WHERE order_id == :orderId")

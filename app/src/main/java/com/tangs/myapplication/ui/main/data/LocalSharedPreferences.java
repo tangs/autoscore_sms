@@ -3,11 +3,16 @@ package com.tangs.myapplication.ui.main.data;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 public class LocalSharedPreferences {
     private static final String DATABASE_NAME = "info";
     private static final String KEY_PHONE_NUMBER = "phone_number";
     private static final String KEY_PLATFORM = "platform";
     private static final String KEY_HOST = "host";
+    private static final String KEY_PLATFORM_FILTER = "platform_filter";
     private static final String KEY_DARK_MODE = "dark_mode";
     private static final String KEY_AUTO_REFRESH = "auto_refresh";
     private static final String KEY_SMS_SEQUENCE_ID = "sms_sequence_id";

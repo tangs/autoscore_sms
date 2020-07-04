@@ -26,12 +26,10 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
-import com.tangs.myapplication.BuildConfig;
 import com.tangs.myapplication.R;
 import com.tangs.myapplication.databinding.FragmentSettingBinding;
 import com.tangs.myapplication.ui.main.adapters.KArrayAdapter;
 import com.tangs.myapplication.ui.main.adapters.RecordAdapter;
-import com.tangs.myapplication.ui.main.data.Record;
 import com.tangs.myapplication.ui.main.data.config.Config;
 import com.tangs.myapplication.ui.main.data.config.Server;
 import com.tangs.myapplication.ui.main.utilities.Injection;
@@ -39,9 +37,7 @@ import com.tangs.myapplication.ui.main.utilities.StringHelper;
 import com.tangs.myapplication.ui.main.viewmodels.SettingViewModel;
 import com.tangs.myapplication.ui.main.viewmodels.SettingViewModelFactory;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -62,7 +58,6 @@ public class SettingFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         binding = FragmentSettingBinding.inflate(inflater, container, false);
         FragmentActivity context = this.getActivity();
-//        LocalSharedPreferences.getInstance(context).setDarkModeIfNotContains(isDark);
         SettingViewModelFactory mViewModelFactory = Injection.provideSettingViewModelFactory(context);
         viewModel = new ViewModelProvider(context, mViewModelFactory).get(SettingViewModel.class);
         binding.setViewmodel(viewModel);
@@ -194,7 +189,7 @@ public class SettingFragment extends Fragment {
         TelephonyManager tMgr = (TelephonyManager) this.getContext().getSystemService(Context.TELEPHONY_SERVICE);
         String phoneNumber = tMgr.getLine1Number();
         String oldPhoneNumber = viewModel.getPhone();
-        if (phoneNumber == null || phoneNumber.length() == 0) return;
+        if (StringHelper.checkNullOrEmpty(phoneNumber)) return;
         if (oldPhoneNumber != null && phoneNumber.equals(oldPhoneNumber)) return;
 
         if (oldPhoneNumber == null || oldPhoneNumber.length() == 0) {

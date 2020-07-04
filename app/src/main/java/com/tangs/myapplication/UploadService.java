@@ -22,9 +22,13 @@ import com.tangs.myapplication.ui.main.data.LocalRecordDataSource;
 import com.tangs.myapplication.ui.main.data.LocalSharedPreferences;
 import com.tangs.myapplication.ui.main.data.Record;
 import com.tangs.myapplication.ui.main.data.RecordDatabase;
+import com.tangs.myapplication.ui.main.data.config.Config;
+import com.tangs.myapplication.ui.main.data.config.Server;
+import com.tangs.myapplication.ui.main.utilities.SmsParser;
 import com.tangs.myapplication.ui.main.utilities.StringHelper;
 
 import java.util.Date;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicReference;
@@ -100,8 +104,8 @@ public class UploadService extends Service {
             Context context = (Context)msg.obj;
             Bundle bundle = msg.getData();
             int orderId = bundle.getInt("orderId", -1);
+            LocalSharedPreferences sharedPreferences = LocalSharedPreferences.getInstance(context);
             if (orderId == -1) {
-                LocalSharedPreferences sharedPreferences = LocalSharedPreferences.getInstance(context);
                 orderId = sharedPreferences.getSmsSequenceId();
                 sharedPreferences.smsSequenceIdIncrease();
             }
@@ -118,23 +122,53 @@ public class UploadService extends Service {
             RecordDataSource dataSource = new LocalRecordDataSource(database.recordDao());
             AtomicReference<Record> record = new AtomicReference<>();
 
-            int sequnceId = orderId;
-            disposable.add(dataSource.getRecord(sequnceId)
+            Map<String, String> params = SmsParser.getInstance().parseSms(sender, body);
+            if (params == null) {
+                stopSelf(msg.arg1);
+                return;
+            }
+
+            try {
+                String platform = sharedPreferences.getPlatform();
+                if (StringHelper.checkNullOrEmpty(platform)) throw new Exception();
+
+                Server server = Config.getInstance(context).geServer(platform);
+                if (server == null) throw new Exception();
+
+                String phone = sharedPreferences.getPhoneNumber();
+                if (StringHelper.checkNullOrEmpty(phone)) throw new Exception();
+
+                String type = params.get("type");
+                if (!server.platforms.contains(type)) throw new Exception();
+
+                params.put("terminal", phone);
+                params.put("pay_id", "" + orderId);
+                params.put("url", server.url);
+            } catch (Exception e) {
+                stopSelf(msg.arg1);
+                return;
+            }
+
+            int sequenceId = orderId;
+            disposable.add(dataSource.getRecord(sequenceId)
                     .subscribeOn(Schedulers.io())
                     .switchIfEmpty(Single.defer(() -> Single.just(Record.Empty())))
                     .subscribe(record1 -> {
                         if (record1.isEmpty) {
                             record1 = new Record();
-                            record1.orderId = sequnceId;
+                            record1.orderId = sequenceId;
                             record1.date = new Date().getTime();
                             record1.state = Record.STATE_WAIT_SERVER;
                             record1.smsSender = sender;
                             record1.smsContent = body;
+                            record1.host = params.get("url");
+                            record1.params = StringHelper.convertWithIteration(params);
                         }
                         record.set(record1);
                         notifyToServer(context, disposable, dataSource, record.get(), msg.arg1);
                     }, throwable -> {
                         throwable.printStackTrace();
+                        stopSelf(msg.arg1);
                     }));
         }
     }

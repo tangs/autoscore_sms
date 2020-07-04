@@ -6,6 +6,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.tangs.myapplication.BuildConfig;
 import com.tangs.myapplication.ui.main.utilities.StringHelper;
 
 import java.text.SimpleDateFormat;
@@ -40,7 +41,7 @@ public class Record {
     public String smsContent = "";
 
     @ColumnInfo(name = "host")
-    public String host = "http://39.154.62.72:80";   // TODO test code.
+    public String host = "";
 
     @ColumnInfo(name = "params")
     public String params = "";
@@ -118,6 +119,9 @@ public class Record {
     }
 
     public String getUrl() {
+        if (BuildConfig.DEBUG) {
+            return "http://192.168.1.101:5678?" + params;
+        }
         return host + "?" + params;
     }
 
