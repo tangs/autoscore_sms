@@ -16,8 +16,6 @@ import com.tangs.myapplication.ui.main.utilities.StringHelper;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import io.reactivex.disposables.CompositeDisposable;
-
 @Entity(tableName = "record")
 public class Record {
     public static final int STATE_UNINIT = -1;
@@ -122,7 +120,12 @@ public class Record {
         buffer.append(state);
         switch (state) {
             case STATE_TIMEOUT:
-            case STATE_SEND_FAIL: buffer.append("(\uD83D\uDC94)");
+            case STATE_SEND_FAIL:
+                buffer.append("(\uD83D\uDC94)");
+                break;
+            case STATE_WAIT_SERVER:
+                buffer.append("\uD83D\uDCE4");
+                break;
         }
         return buffer.toString();
     }

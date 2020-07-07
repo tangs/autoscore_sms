@@ -15,11 +15,14 @@ import io.reactivex.Maybe;
 @Dao
 public interface RecordDao {
 
-    @Query("SELECT * FROM (SELECT * FROM record ORDER BY date DESC LIMIT 1000) sub ORDER BY date ASC")
+    @Query("SELECT * FROM (SELECT * FROM record ORDER BY order_Id DESC LIMIT 1000) sub ORDER BY date ASC")
     Flowable<List<Record>> getAll();
 
     @Query("SELECT * FROM record WHERE order_id == :orderId")
     Maybe<Record> getRecord(int orderId);
+
+    @Query("DELETE FROM record WHERE order_id NOT IN (SELECT order_id FROM(SELECT order_id FROM record ORDER BY order_Id DESC LIMIT 1000))")
+    Completable clean();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     Completable insert(Record record);

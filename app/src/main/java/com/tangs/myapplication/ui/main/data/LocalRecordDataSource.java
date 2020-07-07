@@ -27,6 +27,11 @@ public class LocalRecordDataSource implements RecordDataSource {
     }
 
     @Override
+    public Completable clean() {
+        return recordDao.clean();
+    }
+
+    @Override
     public Completable insert(Record record) {
         return recordDao.insert(record);
     }

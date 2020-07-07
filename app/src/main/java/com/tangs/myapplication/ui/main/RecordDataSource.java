@@ -16,6 +16,8 @@ public interface RecordDataSource {
 
     Completable insert(Record record);
 
+    Completable clean();
+
     Completable delete(Record record);
 
     Completable deleteByOrderId(int orderId);

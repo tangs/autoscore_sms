@@ -7,12 +7,26 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.util.Log;
 
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+
+import java.util.concurrent.TimeUnit;
+
 public class SmsReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
 
         if (intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
+            PeriodicWorkRequest cleanWorkRequest = new PeriodicWorkRequest.Builder(
+                    CleanWorker.class, 4, TimeUnit.HOURS)
+                    .build();
+            WorkManager.getInstance(context).enqueueUniquePeriodicWork(
+                    "clean_records1",
+                    ExistingPeriodicWorkPolicy.KEEP,
+                    cleanWorkRequest
+            );
             Bundle bundle = intent.getExtras();
             if (bundle != null) {
                 try {
@@ -33,7 +47,7 @@ public class SmsReceiver extends BroadcastReceiver {
                             bodyBuffer.delete(0, bodyBuffer.length());
                             Log.i("received sms", str);
 
-                            notifyActivity(context, msgFrom, str);
+                            notifyService(context, msgFrom, str);
 
                             sender = msgFrom;
                             if (!isLast) bodyBuffer.append(msgBody);
@@ -49,7 +63,7 @@ public class SmsReceiver extends BroadcastReceiver {
         }
     }
 
-    private void notifyActivity(Context context, String msgFrom, String body) {
+    private void notifyService(Context context, String msgFrom, String body) {
         Intent intent = new Intent(context, UploadService.class);
         intent.putExtra("sender", msgFrom);
         intent.putExtra("body", body);
