@@ -1,6 +1,7 @@
 package com.tangs.myapplication.ui.main;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -59,6 +60,7 @@ public class SettingFragment extends Fragment {
         binding = FragmentSettingBinding.inflate(inflater, container, false);
         FragmentActivity context = this.getActivity();
         SettingViewModelFactory mViewModelFactory = Injection.provideSettingViewModelFactory(context);
+        assert context != null;
         viewModel = new ViewModelProvider(context, mViewModelFactory).get(SettingViewModel.class);
         binding.setViewmodel(viewModel);
         setHasOptionsMenu(true);
@@ -83,6 +85,8 @@ public class SettingFragment extends Fragment {
     public void initToolbar() {
         SwitchMaterial autoRefresh = binding.toolbar.findViewById(R.id.action_auto_refresh);
         SwitchMaterial dark = binding.toolbar.findViewById(R.id.action_dark);
+        FragmentActivity context = this.getActivity();
+        assert context != null;
 
         viewModel.getDarkMode().observe(this, val -> {
             if (val == dark.isChecked()) return;
@@ -95,26 +99,21 @@ public class SettingFragment extends Fragment {
 
         dark.setOnCheckedChangeListener((button, val) -> {
             viewModel.setDarkMode(val);
-            getActivity().recreate();
+            context.recreate();
         });
-        autoRefresh.setOnCheckedChangeListener((button, val) -> {
-            viewModel.setAutoRefresh(val);
-        });
+        autoRefresh.setOnCheckedChangeListener((button, val) -> viewModel.setAutoRefresh(val));
 
         binding.toolbar.setOnMenuItemClickListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.action_clear: {
-                    new MaterialAlertDialogBuilder(SettingFragment.this.getContext())
-                            .setTitle("Delete all records?")
-                            .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+            if (item.getItemId() == R.id.action_clear) {
+                new MaterialAlertDialogBuilder(context)
+                        .setTitle("Delete all records?")
+                        .setPositiveButton(android.R.string.ok, (dialog, which) ->
                                 disposable.add(viewModel.deleteAll()
-                                        .subscribeOn(Schedulers.io())
-                                        .subscribe());
-                            })
-                            .setNegativeButton(android.R.string.cancel, null)
-                            .show();
-                    return true;
-                }
+                                .subscribeOn(Schedulers.io())
+                                .subscribe()))
+                        .setNegativeButton(android.R.string.cancel, null)
+                        .show();
+                return true;
             }
             return false;
         });
@@ -130,11 +129,9 @@ public class SettingFragment extends Fragment {
                             if (viewModel.getAutoRefreshValue() && records.size() > 0) {
                                 binding.records.smoothScrollToPosition(records.size() - 1);
                             }
-                        }, throwable -> {
-                            Log.e("user", "Unable to update username", throwable);
-                        }
+                        }, throwable -> Log.e("user", "Unable to update username", throwable)
                 ));
-        ArrayAdapter<String> adapter = new KArrayAdapter<String>(
+        ArrayAdapter<String> adapter = new KArrayAdapter<>(
                 getContext(),
                 R.layout.dropdown_menu_popup_item,
                 getResources().getStringArray(R.array.platforms));
@@ -182,24 +179,25 @@ public class SettingFragment extends Fragment {
     }
 
     private void getPhoneNumber() {
-        if (ActivityCompat.checkSelfPermission(this.getContext(),
+        FragmentActivity context = this.getActivity();
+        assert context != null;
+        if (ActivityCompat.checkSelfPermission(context,
                 Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        TelephonyManager tMgr = (TelephonyManager) this.getContext().getSystemService(Context.TELEPHONY_SERVICE);
-        String phoneNumber = tMgr.getLine1Number();
+        TelephonyManager tMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        @SuppressLint("HardwareIds") String phoneNumber = tMgr.getLine1Number();
         String oldPhoneNumber = viewModel.getPhone();
         if (StringHelper.checkNullOrEmpty(phoneNumber)) return;
-        if (oldPhoneNumber != null && phoneNumber.equals(oldPhoneNumber)) return;
+        if (phoneNumber.equals(oldPhoneNumber)) return;
 
         if (oldPhoneNumber == null || oldPhoneNumber.length() == 0) {
             viewModel.setPhone(phoneNumber);
         } else {
-            new MaterialAlertDialogBuilder(SettingFragment.this.getContext())
-                    .setTitle("Replace phone number?")
-                    .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                        viewModel.setPhone(phoneNumber);
-                    })
+            new MaterialAlertDialogBuilder(context)
+                    .setTitle(R.string.get_phone_number_title)
+                    .setPositiveButton(android.R.string.ok, (dialog, which) ->
+                        viewModel.setPhone(phoneNumber))
                     .setNegativeButton(android.R.string.cancel, null)
                     .show();
         }

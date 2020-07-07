@@ -13,6 +13,7 @@ import com.tangs.myapplication.BuildConfig;
 import com.tangs.myapplication.UploadService;
 import com.tangs.myapplication.ui.main.utilities.StringHelper;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -24,9 +25,8 @@ public class Record {
     public static final int STATE_TIMEOUT = 2;
     public static final int STATE_SEND_FAIL = 3;
 
-
-    private static final SimpleDateFormat sdFormat =
-            new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private static final DateFormat sdFormat = SimpleDateFormat.getDateTimeInstance();
+//            new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     @PrimaryKey
     @ColumnInfo(name = "order_id")
@@ -84,8 +84,9 @@ public class Record {
 
     @Override
     public boolean equals(@Nullable Object obj) {
+        if (obj == null) return false;
+        if (this.getClass() != obj.getClass()) return false;
         Record other = (Record)obj;
-        if (other == null) return false;
         return other.orderId == this.orderId
                 && other.date == this.date
                 && other.lastUpdateTime == this.lastUpdateTime
@@ -95,7 +96,8 @@ public class Record {
                 && StringHelper.equals(other.host, this.host)
                 && StringHelper.equals(other.params, this.params)
                 && StringHelper.equals(other.errMsg, this.errMsg)
-                && other.retryTime == this.retryTime;
+                && other.retryTime == this.retryTime
+                && other.isEmpty == isEmpty;
     }
 
     public boolean isFailOrTimeout() {
@@ -116,7 +118,7 @@ public class Record {
     }
 
     public String getStateAlert() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append(state);
         switch (state) {
             case STATE_TIMEOUT:

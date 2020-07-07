@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auto_refresh">自动滚动</string>
+    <string name="dark_mode">深色</string>
+    <string name="phone_number">手机号</string>
+    <string name="platform">平台</string>
+    <string name="upload_address">上传地址</string>
+    <string name="get_phone_number">获取手机号</string>
+    <string name="app_name">自动上分</string>
+    <string name="clear">清理</string>
+    <string name="delete_all_title">删除所有记录？</string>
+    <string name="delete_record_title">删除这条记录？</string>
+    <string name="get_phone_number_title">替换手机号？</string>
+</resources>

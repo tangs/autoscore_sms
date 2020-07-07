@@ -4,10 +4,13 @@ import android.content.Context;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 
+import org.jetbrains.annotations.NotNull;
+
 public class KArrayAdapter<T> extends ArrayAdapter<T> {
     private Filter filter = new KNoFilter();
     public T[] items;
 
+    @NotNull
     @Override
     public Filter getFilter() {
         return filter;

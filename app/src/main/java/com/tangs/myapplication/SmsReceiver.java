@@ -17,8 +17,8 @@ public class SmsReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-        if (intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED")) {
+        String action = intent.getAction();
+        if (action != null && action.equals("android.provider.Telephony.SMS_RECEIVED")) {
             PeriodicWorkRequest cleanWorkRequest = new PeriodicWorkRequest.Builder(
                     CleanWorker.class, 4, TimeUnit.HOURS)
                     .build();
@@ -31,6 +31,7 @@ public class SmsReceiver extends BroadcastReceiver {
             if (bundle != null) {
                 try {
                     Object[] pdus = (Object[]) bundle.get("pdus");
+                    if (pdus == null) return;
                     SmsMessage[] messages = new SmsMessage[pdus.length];
                     String sender = "";
                     StringBuilder bodyBuffer = new StringBuilder();
@@ -38,6 +39,7 @@ public class SmsReceiver extends BroadcastReceiver {
                         messages[i] = SmsMessage.createFromPdu((byte[])pdus[i]);
                         String msgFrom = messages[i].getOriginatingAddress();
                         String msgBody = messages[i].getMessageBody();
+                        if (msgFrom == null || msgBody == null) return;
 
                         if (sender.length() == 0) sender = msgFrom;
                         boolean isLast = i == messages.length - 1;

@@ -7,7 +7,7 @@ import java.io.InputStream;
 
 public class JsonHelper {
     public static String loadJSONFromAsset(Context context, int id) {
-        String json = null;
+        String json;
         try {
             InputStream is = context.getResources().openRawResource(id);
             int size = is.available();

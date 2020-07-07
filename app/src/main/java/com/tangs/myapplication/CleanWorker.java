@@ -39,9 +39,7 @@ public class CleanWorker extends Worker {
                     success.set(true);
                     Log.i("clean_work", "work complete.");
                 })
-                .doOnError(err -> {
-                    Log.i("clean_work", "work err:" + err.getMessage());
-                })
+                .doOnError(err -> Log.i("clean_work", "work err:" + err.getMessage()))
                 .doFinally(() -> {
                     synchronized (lock) {
                         lock.notify();

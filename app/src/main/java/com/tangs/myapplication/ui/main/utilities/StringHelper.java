@@ -20,7 +20,7 @@ public class StringHelper {
     }
 
     public static String convertWithIteration(Map<String, String> map) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (Map.Entry<String, String> entry: map.entrySet()) {
             sb.append(entry.getKey());
             sb.append('=');

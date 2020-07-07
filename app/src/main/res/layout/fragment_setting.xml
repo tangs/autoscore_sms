@@ -33,10 +33,10 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textField"
                 style="@style/AppTextInputLayout"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="phone"
+                android:hint="@string/phone_number"
                 app:startIconDrawable="@android:drawable/stat_sys_phone_call">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -55,10 +55,10 @@
 
             <Button
                 android:id="@+id/getPhoneNumber"
+                style="@style/AppButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="GET"
-                style="@style/AppButton"/>
+                android:text="@string/get_phone_number" />
         </LinearLayout>
 
         <LinearLayout
@@ -71,8 +71,8 @@
                 android:id="@+id/platforms"
                 style="@style/AppExposedDropdownMenu"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="platform"
+                android:layout_height="match_parent"
+                android:hint="@string/platform"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button">
@@ -80,12 +80,13 @@
                 <AutoCompleteTextView
                     android:id="@+id/filled_exposed_dropdown"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:cursorVisible="false"
                     android:focusable="false"
                     android:inputType="none"
                     android:minWidth="100dp"
-                    android:text="@={viewmodel.platform}" />
+                    android:text="@={viewmodel.platform}"
+                    tools:ignore="LabelFor" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <Space
@@ -96,7 +97,7 @@
                 style="@style/AppTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="host">
+                android:hint="@string/upload_address">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/host"

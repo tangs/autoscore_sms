@@ -1,5 +1,6 @@
 package com.tangs.myapplication.ui.main;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,7 +42,9 @@ public class RecordDetailFragment extends Fragment {
         binding = RecordDetailFragmentBinding.inflate(inflater, container, false);
         FragmentActivity context = this.getActivity();
         RecordDetailViewModelFactory viewModelFactory = Injection.provideRecordDetailViewModelFactory(context);
+        assert context != null;
         viewModel = new ViewModelProvider(context, viewModelFactory).get(RecordDetailViewModel.class);
+        assert this.getArguments() != null;
         int orderId = this.getArguments().getInt("orderId", -1);
 
         disposable.add(viewModel.getRecords()
@@ -58,9 +61,7 @@ public class RecordDetailFragment extends Fragment {
                                 }
                             }
                              Navigation.findNavController(binding.getRoot()).navigateUp();
-                        }, throwable -> {
-                            Log.e("user", "Unable to update username", throwable);
-                        }
+                        }, throwable -> Log.e("user", "Unable to update username", throwable)
                 ));
         initToolbar();
         return binding.getRoot();
@@ -80,9 +81,7 @@ public class RecordDetailFragment extends Fragment {
     }
 
     private void initToolbar() {
-        binding.toolbar.setNavigationOnClickListener(view -> {
-            Navigation.findNavController(view).navigateUp();
-        });
+        binding.toolbar.setNavigationOnClickListener(view -> Navigation.findNavController(view).navigateUp());
         binding.toolbar.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.action_upload: {
@@ -93,21 +92,18 @@ public class RecordDetailFragment extends Fragment {
                     disposable.add(viewModel.updateRecord(record)
                             .subscribeOn(Schedulers.io())
                             .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(() -> {
-                                record.upload(getContext());
-                            }, throwable -> {
-                                throwable.printStackTrace();
-                            }));
+                            .subscribe(() -> record.upload(getContext()), Throwable::printStackTrace));
                     return true;
                 }
                 case R.id.action_delete: {
-                    new MaterialAlertDialogBuilder(this.getContext())
-                            .setTitle("Delete this record?")
-                            .setPositiveButton(android.R.string.ok, (dialog, which) -> {
-                                disposable.add(viewModel.deleteRecord(binding.getRecord().orderId)
-                                        .subscribeOn(Schedulers.io())
-                                        .subscribe());
-                            })
+                    Context context = this.getContext();
+                    assert context != null;
+                    new MaterialAlertDialogBuilder(context)
+                            .setTitle(R.string.delete_all_title)
+                            .setPositiveButton(android.R.string.ok, (dialog, which) ->
+                                    disposable.add(viewModel.deleteRecord(binding.getRecord().orderId)
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribe()))
                             .setNegativeButton(android.R.string.cancel, null)
                             .show();
                     return true;
@@ -119,6 +115,7 @@ public class RecordDetailFragment extends Fragment {
 
 
     private void initData() {
+        assert this.getArguments() != null;
         int orderId = this.getArguments().getInt("orderId", -1);
         this.binding.toolbar.setTitle("order:" + orderId);
     }

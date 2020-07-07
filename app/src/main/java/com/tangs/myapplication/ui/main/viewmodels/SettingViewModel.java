@@ -23,11 +23,11 @@ public class SettingViewModel extends ViewModel implements Observable {
     private final LocalSharedPreferences localSharedPreferences;
     private PropertyChangeRegistry callbacks = new PropertyChangeRegistry();
 
-    private MutableLiveData<String> phone = new MutableLiveData<String>();
-    private MutableLiveData<String> platform = new MutableLiveData<String>();
-    private MutableLiveData<String> host = new MutableLiveData<String>();
-    private MutableLiveData<Boolean> darkMode = new MutableLiveData<Boolean>();
-    private MutableLiveData<Boolean> autoRefresh = new MutableLiveData<Boolean>();
+    private MutableLiveData<String> phone = new MutableLiveData<>();
+    private MutableLiveData<String> platform = new MutableLiveData<>();
+    private MutableLiveData<String> host = new MutableLiveData<>();
+    private MutableLiveData<Boolean> darkMode = new MutableLiveData<>();
+    private MutableLiveData<Boolean> autoRefresh = new MutableLiveData<>();
 
     public SettingViewModel(RecordDataSource dataSource, LocalSharedPreferences localSharedPreferences) {
         this.dataSource = dataSource;

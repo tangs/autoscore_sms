@@ -11,7 +11,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.os.Process;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.toolbox.RequestFuture;
@@ -39,7 +38,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class UploadService extends Service {
 
-    private Looper serviceLooper;
     private ServiceHandler serviceHandler;
 
     private final class ServiceHandler extends Handler {
@@ -53,9 +51,7 @@ public class UploadService extends Service {
                                    Record record) {
             disposable.add(dataSource.insert(record)
                     .subscribeOn(Schedulers.io())
-                    .subscribe(() -> {
-                        Log.i("sms", "end");
-                    }, throwable -> {
+                    .subscribe(() -> Log.i("sms", "end"), throwable -> {
                         Log.i("sms", "fail");
                         throwable.printStackTrace();
                     }));
@@ -76,8 +72,7 @@ public class UploadService extends Service {
             boolean isSuccess = false;
             try {
                 future.get(10, TimeUnit.SECONDS);
-                String response = future.get();
-                record.responseMsg = response;
+                record.responseMsg = future.get();
                 record.state = Record.STATE_RES_OK;
                 record.errMsg = "";
                 dataSource.insert(record);
@@ -172,7 +167,6 @@ public class UploadService extends Service {
                         }));
             } catch (Exception e) {
                 stopSelf(msg.arg1);
-                return;
             }
         }
     }
@@ -188,13 +182,13 @@ public class UploadService extends Service {
         thread.start();
 
         // Get the HandlerThread's Looper and use it for our Handler
-        serviceLooper = thread.getLooper();
+        Looper serviceLooper = thread.getLooper();
         serviceHandler = new ServiceHandler(serviceLooper);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
 
         // For each start request, send a message to start a job and deliver the
         // start ID so we know which request we're stopping when we finish the job
@@ -227,6 +221,6 @@ public class UploadService extends Service {
 
     @Override
     public void onDestroy() {
-        Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "service done", Toast.LENGTH_SHORT).show();
     }
 }
