@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">အော်တိုရမှတ်</string>
+    <string name="auto_refresh">အော်တို scroll လုပ်ပါ</string>
+    <string name="dark_mode">မှောငျမိုကျသော</string>
+    <string name="phone_number">ဖုန်းနံပါတ်</string>
+    <string name="platform">ပလက်ဖောင်း</string>
+    <string name="upload_address">လိပ်စာတင်ပါ</string>
+    <string name="get_phone_number">ရပါတယ်</string>
+    <string name="clear">ရှင်းလင်းသော</string>
+    <string name="delete_all_title">မှတ်တမ်းအားလုံးကိုဖျက်မည်လား။</string>
+    <string name="delete_record_title">ဒီမှတ်တမ်းကိုဖျက်မလား။</string>
+    <string name="get_phone_number_title">ဖုန်းနံပါတ်ကိုအစားထိုးပါ။</string>
+</resources>

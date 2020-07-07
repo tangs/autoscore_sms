@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">คะแนนอัตโนมัติ</string>
+    <string name="auto_refresh">เลื่อนอัตโนมัติ</string>
+    <string name="dark_mode">มืด</string>
+    <string name="phone_number">หมายเลขโทรศัพท์</string>
+    <string name="platform">เวที</string>
+    <string name="upload_address">" ที่อยู่อัพโหลด"</string>
+    <string name="get_phone_number">ได้รับ</string>
+    <string name="clear">ชัดเจน</string>
+    <string name="delete_all_title">ลบระเบียนทั้งหมดหรือไม่</string>
+    <string name="delete_record_title">ลบบันทึกนี้หรือไม่</string>
+    <string name="get_phone_number_title">แทนที่หมายเลขโทรศัพท์หรือไม่</string>
+</resources>
