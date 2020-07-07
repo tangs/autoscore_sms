@@ -9,7 +9,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.tangs.myapplication.BuildConfig;
+import com.tangs.auto_score_sms.BuildConfig;
 import com.tangs.myapplication.UploadService;
 import com.tangs.myapplication.ui.main.utilities.StringHelper;
 

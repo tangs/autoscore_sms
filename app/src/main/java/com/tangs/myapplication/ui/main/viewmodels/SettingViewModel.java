@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.tangs.myapplication.BR;
+import com.tangs.auto_score_sms.BR;
 import com.tangs.myapplication.ui.main.RecordDataSource;
 import com.tangs.myapplication.ui.main.data.LocalSharedPreferences;
 import com.tangs.myapplication.ui.main.data.Record;

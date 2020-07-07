@@ -16,8 +16,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.tangs.myapplication.R;
-import com.tangs.myapplication.databinding.RecordDetailFragmentBinding;
+import com.tangs.auto_score_sms.R;
+import com.tangs.auto_score_sms.databinding.RecordDetailFragmentBinding;
 import com.tangs.myapplication.ui.main.data.Record;
 import com.tangs.myapplication.ui.main.utilities.Injection;
 import com.tangs.myapplication.ui.main.viewmodels.RecordDetailViewModel;

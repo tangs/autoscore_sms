@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
+import com.tangs.auto_score_sms.R;
 import com.tangs.myapplication.ui.main.data.LocalSharedPreferences;
 
 import java.util.List;

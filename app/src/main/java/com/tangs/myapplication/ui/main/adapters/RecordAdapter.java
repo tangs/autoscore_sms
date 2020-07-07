@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.tangs.myapplication.R;
-import com.tangs.myapplication.databinding.ListItemRecordBinding;
+import com.tangs.auto_score_sms.R;
+import com.tangs.auto_score_sms.databinding.ListItemRecordBinding;
 import com.tangs.myapplication.ui.main.data.Record;
 
 public class RecordAdapter extends ListAdapter<Record, RecordAdapter.RecordViewHolder> {

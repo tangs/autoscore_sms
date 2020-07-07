@@ -5,7 +5,7 @@ android {
     buildToolsVersion "30.0.0"
 
     defaultConfig {
-        applicationId "com.tangs.myapplication"
+        applicationId "com.tangs.auto_score_sms"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1

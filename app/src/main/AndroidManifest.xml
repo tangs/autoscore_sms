@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.tangs.myapplication">
+    package="com.tangs.auto_score_sms">
 
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS"/>
     <uses-permission android:name="android.permission.RECEIVE_SMS"/>
@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme"
         tools:targetApi="n">
         <activity
-            android:name=".MainActivity"
+            android:name="com.tangs.myapplication.MainActivity"
             android:launchMode="singleTask">
             <nav-graph android:value="@navigation/nav_graph" />
             <intent-filter>
@@ -26,14 +26,14 @@
         </activity>
 
         <receiver
-            android:name=".SmsReceiver"
+            android:name="com.tangs.myapplication.SmsReceiver"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter android:priority="1000">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".UploadService"
+        <service android:name="com.tangs.myapplication.UploadService"
             android:exported="false"/>
     </application>
 

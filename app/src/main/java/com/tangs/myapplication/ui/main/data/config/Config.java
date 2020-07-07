@@ -2,7 +2,7 @@ package com.tangs.myapplication.ui.main.data.config;
 
 import android.content.Context;
 
-import com.tangs.myapplication.R;
+import com.tangs.auto_score_sms.R;
 import com.tangs.myapplication.ui.main.utilities.JsonHelper;
 
 import org.json.JSONArray;
