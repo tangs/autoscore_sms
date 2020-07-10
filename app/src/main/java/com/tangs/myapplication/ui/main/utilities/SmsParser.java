@@ -66,7 +66,7 @@ public class SmsParser {
         )));
         // 泰国scb
         patterns.add(new Pair<>("9005", new Pair<>(
-                Pattern.compile("([0-9@/:]) ([0-9.,]+) จากKBNK/x(\\d+)เข้าx\\d+"),
+                Pattern.compile("([0-9@/:]) ([0-9.,]+) จาก[^/]*/x(\\d+)เข้าx\\d+"),
                 new String[] {
                         "bank_time",
                         "pay_money",
