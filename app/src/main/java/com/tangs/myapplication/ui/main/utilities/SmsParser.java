@@ -44,6 +44,15 @@ public class SmsParser {
                         "pay_order_num",
                 }
         )));
+        // 缅甸：WaveMoney
+        patterns.add(new Pair<>("9002", new Pair<>(
+                Pattern.compile("ရငွေ:([0-9.,]+) Ks, ပိုသူ:(\\d+), TID:(\\d+)"),
+                new String[] {
+                        "pay_money",
+                        "pay_phone",
+                        "pay_order_num",
+                }
+        )));
         // 缅甸MPT
         patterns.add(new Pair<>("9003", new Pair<>(
                 Pattern.compile("(\\d+) ထံသို ငွေ ([0-9.,]+)Ks အား လွှပေးမှု အောင်မြင်ပါသည်။ ဝန်ဆောင်ခ: [0-9.,]+Ks လုပ်ဆောင်မှုအမှတ်: (\\w+) ([0-9-]+ [0-9:]+)"),
