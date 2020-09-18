@@ -120,7 +120,7 @@ public class UploadService extends Service {
             RecordDataSource dataSource = new LocalRecordDataSource(database.recordDao());
             AtomicReference<Record> record = new AtomicReference<>();
 
-            Map<String, String> params = SmsParser.getInstance().parseSms(sender, body);
+            Map<String, String> params = SmsParser.getInstance(context).parseSms(sender, body);
             if (params == null) {
                 stopSelf(msg.arg1);
                 return;
@@ -130,7 +130,7 @@ public class UploadService extends Service {
                 String platform = sharedPreferences.getPlatform();
                 if (StringHelper.checkNullOrEmpty(platform)) throw new Exception();
 
-                Server server = Config.getInstance(context).geServer(platform);
+                Server server = Config.getInstance(context).getServer(platform);
                 if (server == null) throw new Exception();
 
                 String phone = sharedPreferences.getPhoneNumber();

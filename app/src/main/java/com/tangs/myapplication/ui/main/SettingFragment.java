@@ -148,7 +148,7 @@ public class SettingFragment extends Fragment {
                     String platform = viewModel.getPlatform();
                     if (StringHelper.checkNullOrEmpty(platform)) return;
                     Server server = Config.getInstance(SettingFragment.this.getContext())
-                            .geServer(platform);
+                            .getServer(platform);
                     if (server == null) return;
                     viewModel.setHost(server.url);
                 }

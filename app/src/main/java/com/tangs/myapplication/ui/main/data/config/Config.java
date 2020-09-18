@@ -8,12 +8,15 @@ import com.tangs.myapplication.ui.main.utilities.JsonHelper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class Config {
     public Map<String, Server> servers = new HashMap<>();
+    public List<Rule> rules = new ArrayList<>();
     private static Config config;
 
     public static Config getInstance(Context context) {
@@ -27,7 +30,7 @@ public class Config {
         loadConfig(context);
     }
 
-    public Server geServer(String platform) {
+    public Server getServer(String platform) {
         if (!config.servers.containsKey(platform)) return null;
         Server server = config.servers.get(platform);
         return server;
@@ -50,6 +53,22 @@ public class Config {
                     server.platforms.add(platforms.getString(i));
                 }
                 this.servers.put(key, server);
+            }
+
+            JSONArray rules = obj.getJSONArray("rules");
+            this.rules.clear();
+            for (int i = 0; i < rules.length(); ++i) {
+                JSONObject ruleObj = rules.getJSONObject(i);
+                Rule rule = new Rule();
+                rule.channel = ruleObj.getString("channel");
+                rule.pattern = ruleObj.getString("pattern");
+                JSONArray fields = ruleObj.getJSONArray("fields");
+                for (int j = 0; j < fields.length(); ++j) {
+                    rule.fields.add(fields.getString(j));
+                }
+                if (rule.isValid()) {
+                    this.rules.add(rule);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,4 +1,113 @@
 {
+  "rules": [
+    {
+      "channel": "9001",
+      "pattern": "([0-9/]+ [0-9:]+) บช\\w+ รับโอนจาก(\\w+) ([0-9.,]+)บ( คงเหลือ[0-9.]+บ)?",
+      "fields": [
+        "bank_time",
+        "pay_card_num",
+        "pay_money",
+        ""
+      ]
+    },
+    {
+      "channel": "9001",
+      "pattern": "([0-9/]+ [0-9:]+) บช\\w+ เงินเข้า([0-9.,]+)( คงเหลือ([0-9.,]+)บ)?",
+      "fields": [
+        "bank_time",
+        "pay_money",
+        ""
+      ]
+    },
+    {
+      "channel": "9002",
+      "pattern": "Amt: ([0-9.,]+) Ks, Sender: (\\d+), Trx ID: (\\d+)",
+      "fields": [
+        "pay_money",
+        "pay_phone",
+        "pay_order_num"
+      ]
+    },
+    {
+      "channel": "9002",
+      "pattern": "ရငွေ:([0-9.,]+) Ks, ပိုသူ:(\\d+), TID:(\\d+)",
+      "fields": [
+        "pay_money",
+        "pay_phone",
+        "pay_order_num"
+      ]
+    },
+    {
+      "channel": "9002",
+      "pattern": "ရငွေ:([0-9.,]+) Ks, ပို့သူ:(\\d+), TID:(\\d+)",
+      "fields": [
+        "pay_money",
+        "pay_phone",
+        "pay_order_num"
+      ]
+    },
+    {
+      "channel": "9003",
+      "pattern": "(\\d+) ထံသို ငွေ ([0-9.,]+)Ks အား လွှပေးမှု အောင်မြင်ပါသည်။ ဝန်ဆောင်ခ: [0-9.,]+Ks လုပ်ဆောင်မှုအမှတ်: (\\w+) ([0-9-]+ [0-9:]+)",
+      "fields": [
+        "pay_phone",
+        "pay_money",
+        "pay_order_num",
+        "bank_time"
+      ]
+    },
+    {
+      "channel": "9004",
+      "pattern": "You have received ([0-9.,]+) MMK from ([0-9+]+) on ([0-9a-zA-Z-]+ [0-9:]+). Your Account Balance is [0-9.,]+ MMK. Transaction ID (\\w+)",
+      "fields": [
+        "pay_money",
+        "pay_phone",
+        "bank_time",
+        "pay_order_num"
+      ]
+    },
+    {
+      "channel": "9005",
+      "pattern": "([0-9@/:]) ([0-9.,]+) จาก[^/]*/x(\\d+)เข้าx\\d+",
+      "fields": [
+        "bank_time",
+        "pay_money",
+        "pay_card_num"
+      ]
+    },
+    {
+      "channel": "9005",
+      "pattern": "ถอน/โอนเงิน ([0-9.,]+)บ บ/ชx\\d+ ([0-9@/:])",
+      "fields": [
+        "pay_money",
+        "bank_time"
+      ]
+    },
+    {
+      "channel": "9005",
+      "pattern": "([0-9@/:]) ([0-9.,]+) เข้าx\\d+",
+      "fields": [
+        "bank_time",
+        "pay_money"
+      ]
+    },
+    {
+      "channel": "9014",
+      "pattern": "Sacombank ([0-9/]* \\d*:\\d*)\\s*TK: \\d*\\s*PS: [+]([0-9,]*) VND\\s*[^:]*: [0-9,]* VND\\s*\\w* (\\w*)",
+      "fields": [
+        "bank_time",
+        "pay_money",
+        "pay_order_num"
+      ]
+    },
+    {
+      "channel": "9014",
+      "pattern": "aaa(\\d+)",
+      "fields": [
+        "pay_money"
+      ]
+    }
+  ],
   "servers": {
     "泰国1": {
       "url": "http://18.140.97.213/api/pay/payinfo",
@@ -58,6 +167,13 @@
     },
     "泰国9": {
       "url": "http://3.0.185.85/api/pay/payinfo",
+      "platforms": [
+        "9001",
+        "9005"
+      ]
+    },
+    "泰国10": {
+      "url": "http://52.74.160.251/api/pay/payinfo",
       "platforms": [
         "9001",
         "9005"
@@ -133,6 +249,50 @@
         "9002",
         "9003",
         "9004"
+      ]
+    },
+    "越南2": {
+      "url": "http://13.250.74.43/api/pay/payinfo",
+      "platforms": [
+        "9006",
+        "9007",
+        "9014",
+        "9015",
+        "9016",
+        "9017"
+      ]
+    },
+    "越南3": {
+      "url": "http://52.74.120.23/api/pay/payinfo",
+      "platforms": [
+        "9006",
+        "9007",
+        "9014",
+        "9015",
+        "9016",
+        "9017"
+      ]
+    },
+    "越南4": {
+      "url": "http://18.140.191.200/api/pay/payinfo",
+      "platforms": [
+        "9006",
+        "9007",
+        "9014",
+        "9015",
+        "9016",
+        "9017"
+      ]
+    },
+    "越南5": {
+      "url": "http://54.151.253.153/api/pay/payinfo",
+      "platforms": [
+        "9006",
+        "9007",
+        "9014",
+        "9015",
+        "9016",
+        "9017"
       ]
     }
   }
