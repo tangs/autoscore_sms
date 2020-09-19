@@ -102,10 +102,12 @@
       ]
     },
     {
-      "channel": "9014",
-      "pattern": "aaa(\\d+)",
+      "channel": "9015",
+      "pattern": "ACB[:] TK \\d+[(]VND[)] [+] ([0-9,]+) luc ([0-9:/ ]+). So du [0-9,]+. GD[:] .+ (\\d+)$",
       "fields": [
-        "pay_money"
+        "pay_money",
+        "bank_time",
+        "pay_order_num"
       ]
     }
   ],
