@@ -109,6 +109,24 @@
         "bank_time",
         "pay_order_num"
       ]
+    },
+    {
+      "channel": "9016",
+      "pattern": "SD TK \\d+ [+]([0-9,]+)VND luc ([0-9: -]+). SD [0-9,]+VND. Ref .*?(\\d+)[.]CT",
+      "fields": [
+        "pay_money",
+        "bank_time",
+        "pay_order_num"
+      ]
+    },
+    {
+      "channel": "9017",
+      "pattern": "Quy khach da duoc nhan ([0-9.]+) VND .*[.] Noi dung: nap id (\\d+)[.] Ngay GD: ([0-9:/ ]+)[.]",
+      "fields": [
+        "pay_money",
+        "pay_order_num",
+        "bank_time"
+      ]
     }
   ],
   "servers": {
