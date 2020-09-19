@@ -93,11 +93,12 @@
     },
     {
       "channel": "9014",
-      "pattern": "Sacombank ([0-9/]* \\d*:\\d*)\\s*TK: \\d*\\s*PS: [+]([0-9,]*) VND\\s*[^:]*: [0-9,]* VND\\s*\\w* (\\w*)",
+      "pattern": "Sacombank ([0-9/]* \\d*:\\d*)\\s*TK: \\d*\\s*PS: [+]([0-9,]*) VND\\s*[^:]*: [0-9,]* VND\\s*.*? (\\d+)( CKN \\d*)?$",
       "fields": [
         "bank_time",
         "pay_money",
-        "pay_order_num"
+        "pay_order_num",
+        ""
       ]
     },
     {
