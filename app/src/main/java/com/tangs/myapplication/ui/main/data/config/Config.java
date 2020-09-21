@@ -62,10 +62,10 @@ public class Config {
                 Rule rule = new Rule();
                 rule.channel = ruleObj.getString("channel");
                 rule.pattern = ruleObj.getString("pattern");
-                JSONArray fields = ruleObj.getJSONArray("fields");
-                for (int j = 0; j < fields.length(); ++j) {
-                    rule.fields.add(fields.getString(j));
-                }
+//                JSONArray fields = ruleObj.getJSONArray("fields");
+//                for (int j = 0; j < fields.length(); ++j) {
+//                    rule.fields.add(fields.getString(j));
+//                }
                 if (rule.isValid()) {
                     this.rules.add(rule);
                 }

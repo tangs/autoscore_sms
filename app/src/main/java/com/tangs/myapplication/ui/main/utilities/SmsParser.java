@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,105 +23,31 @@ public class SmsParser {
 
     private List<Pair<String, Pair<Pattern, String[]>>> patterns = new ArrayList<>();
 
+    private static List<String> getNamedGroupCandidates(String regex) {
+        List<String> namedGroups = new ArrayList<>();
+        Matcher m = Pattern.compile("(^|[^\\\\])\\((\\?<([a-zA-Z][a-zA-Z0-9_]*)>)?").matcher(regex);
+        while (m.find()) {
+            namedGroups.add(m.group(3));
+        }
+        return namedGroups;
+    }
+
+    private static String removeGroupName(String regex) {
+        return regex.replaceAll("\\(\\?<[a-zA-Z][a-zA-Z0-9_]*>", "\\(");
+    }
+
     private SmsParser(Context context) {
         for (Rule rule: Config.getInstance(context).rules) {
-            String[] arr = new String[rule.fields.size()];
-            arr = rule.fields.toArray(arr);
+//            String[] arr = new String[rule.fields.size()];
+//            arr = rule.fields.toArray(arr);
+            List<String> candidates = getNamedGroupCandidates(rule.pattern);
+            String[] arr = new String[candidates.size()];
+            candidates.toArray(arr);
+            String regex = removeGroupName(rule.pattern);
             patterns.add(new Pair<>(rule.channel, new Pair<>(
-                    Pattern.compile(rule.pattern), arr
+                    Pattern.compile(regex), arr
             )));
         }
-//         K-PULS
-//        patterns.add(new Pair<>("9001", new Pair<>(
-//                Pattern.compile("([0-9/]+ [0-9:]+) บช\\w+ รับโอนจาก(\\w+) ([0-9.,]+)บ( คงเหลือ[0-9.]+บ)?"),
-//                new String[] {
-//                        "bank_time",
-//                        "pay_card_num",
-//                        "pay_money",
-//                        "",
-//                }
-//        )));
-//        // K-PULS
-//        patterns.add(new Pair<>("9001", new Pair<>(
-//                Pattern.compile("([0-9/]+ [0-9:]+) บช\\w+ เงินเข้า([0-9.,]+)( คงเหลือ([0-9.,]+)บ)?"),
-//                new String[] {
-//                        "bank_time",
-//                        "pay_money",
-//                        "",
-//                }
-//        )));
-//        // 缅甸：WaveMoney
-//        patterns.add(new Pair<>("9002", new Pair<>(
-//                Pattern.compile("Amt: ([0-9.,]+) Ks, Sender: (\\d+), Trx ID: (\\d+)"),
-//                new String[] {
-//                        "pay_money",
-//                        "pay_phone",
-//                        "pay_order_num",
-//                }
-//        )));
-//        // 缅甸：WaveMoney
-//        patterns.add(new Pair<>("9002", new Pair<>(
-//                Pattern.compile("ရငွေ:([0-9.,]+) Ks, ပိုသူ:(\\d+), TID:(\\d+)"),
-//                new String[] {
-//                        "pay_money",
-//                        "pay_phone",
-//                        "pay_order_num",
-//                }
-//        )));
-//        // 缅甸：WaveMoney
-//        patterns.add(new Pair<>("9002", new Pair<>(
-//                Pattern.compile("ရငွေ:([0-9.,]+) Ks, ပို့သူ:(\\d+), TID:(\\d+)"),
-//                new String[] {
-//                        "pay_money",
-//                        "pay_phone",
-//                        "pay_order_num",
-//                }
-//        )));
-//        // 缅甸MPT
-//        patterns.add(new Pair<>("9003", new Pair<>(
-//                Pattern.compile("(\\d+) ထံသို ငွေ ([0-9.,]+)Ks အား လွှပေးမှု အောင်မြင်ပါသည်။ ဝန်ဆောင်ခ: [0-9.,]+Ks လုပ်ဆောင်မှုအမှတ်: (\\w+) ([0-9-]+ [0-9:]+)"),
-//                new String[] {
-//                        "pay_phone",
-//                        "pay_money",
-//                        "pay_order_num",
-//                        "bank_time",
-//                }
-//        )));
-//        // 缅甸OK-PAY
-//        patterns.add(new Pair<>("9004", new Pair<>(
-//                Pattern.compile("You have received ([0-9.,]+) MMK from ([0-9+]+) on ([0-9a-zA-Z-]+ [0-9:]+). Your Account Balance is [0-9.,]+ MMK. Transaction ID (\\w+)"),
-//                new String[] {
-//                        "pay_money",
-//                        "pay_phone",
-//                        "bank_time",
-//                        "pay_order_num",
-//                }
-//        )));
-//        // 泰国scb
-//        patterns.add(new Pair<>("9005", new Pair<>(
-//                Pattern.compile("([0-9@/:]) ([0-9.,]+) จาก[^/]*/x(\\d+)เข้าx\\d+"),
-//                new String[] {
-//                        "bank_time",
-//                        "pay_money",
-//                        "pay_card_num",
-//                }
-//        )));
-//        // 泰国scb
-//        patterns.add(new Pair<>("9005", new Pair<>(
-//                Pattern.compile("ถอน/โอนเงิน ([0-9.,]+)บ บ/ชx\\d+ ([0-9@/:])"),
-//                new String[] {
-//                        "pay_money",
-//                        "bank_time",
-//                }
-//        )));
-//        // 泰国scb
-//        patterns.add(new Pair<>("9005", new Pair<>(
-//                Pattern.compile("([0-9@/:]) ([0-9.,]+) เข้าx\\d+"),
-//                new String[] {
-//                        "bank_time",
-//                        "pay_money",
-//                }
-//        )));
     }
 
     public static SmsParser getInstance(Context context) {
@@ -131,13 +59,13 @@ public class SmsParser {
 
     public Map<String, String> parseSms(String sender, String body) {
         if (sender == null || body == null) return null;
-        body = body.replaceAll("\\s+", " ");
+        body = body.replaceAll("\\s+", " ").trim();
         for (Pair<String, Pair<Pattern, String[]>> entry: patterns) {
             String type = entry.first;
             Pattern pattern = entry.second.first;
             String[] keys = entry.second.second;
-
             Matcher m = pattern.matcher(body);
+            label1:
             if (m.find()) {
                 Map<String, String> ret = new HashMap<>();
                 for (int i = 0; i < keys.length; ++i) {
@@ -145,7 +73,7 @@ public class SmsParser {
                     if (key == null || key.length() == 0) continue;
                     if (m.groupCount() < i + 1) break;
                     String value = m.group(i + 1);
-                    if (value == null || value.length() == 0) continue;
+                    if (value == null || value.length() == 0) break label1;
                     if (key.equals("pay_money")) value = value.replace(",", "");
                     ret.put(key, value);
                 }

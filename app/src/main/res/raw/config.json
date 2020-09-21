@@ -2,132 +2,103 @@
   "rules": [
     {
       "channel": "9001",
-      "pattern": "([0-9/]+ [0-9:]+) บช\\w+ รับโอนจาก(\\w+) ([0-9.,]+)บ( คงเหลือ[0-9.]+บ)?",
-      "fields": [
-        "bank_time",
-        "pay_card_num",
-        "pay_money",
-        ""
-      ]
+      "pattern": "(?<bank_time>[0-9/]+ [0-9:]+) บช\\w+ รับโอนจาก(?<pay_card_num>\\w+) (?<pay_money>[0-9.,]+)บ( คงเหลือ[0-9.]+บ)?"
     },
     {
       "channel": "9001",
-      "pattern": "([0-9/]+ [0-9:]+) บช\\w+ เงินเข้า([0-9.,]+)( คงเหลือ([0-9.,]+)บ)?",
-      "fields": [
-        "bank_time",
-        "pay_money",
-        ""
-      ]
+      "pattern": "(?<bank_time>[0-9/]+ [0-9:]+) บช\\w+ เงินเข้า(?<pay_money>[0-9.,]+)( คงเหลือ([0-9.,]+)บ)?"
     },
     {
       "channel": "9002",
-      "pattern": "Amt: ([0-9.,]+) Ks, Sender: (\\d+), Trx ID: (\\d+)",
-      "fields": [
-        "pay_money",
-        "pay_phone",
-        "pay_order_num"
-      ]
+      "pattern": "Amt: (?<pay_money>[0-9.,]+) Ks, Sender: (?<pay_phone>\\d+), Trx ID: (?<pay_order_num>\\d+)"
     },
     {
       "channel": "9002",
-      "pattern": "ရငွေ:([0-9.,]+) Ks, ပိုသူ:(\\d+), TID:(\\d+)",
-      "fields": [
-        "pay_money",
-        "pay_phone",
-        "pay_order_num"
-      ]
+      "pattern": "ရငွေ:(?<pay_money>[0-9.,]+) Ks, ပိုသူ:(?<pay_phone>\\d+), TID:(?<pay_order_num>\\d+)"
     },
     {
       "channel": "9002",
-      "pattern": "ရငွေ:([0-9.,]+) Ks, ပို့သူ:(\\d+), TID:(\\d+)",
-      "fields": [
-        "pay_money",
-        "pay_phone",
-        "pay_order_num"
-      ]
+      "pattern": "ရငွေ:(?<pay_money>[0-9.,]+) Ks, ပို့သူ:(?<pay_phone>\\d+), TID:(?<pay_order_num>\\d+)"
     },
     {
       "channel": "9003",
-      "pattern": "(\\d+) ထံသို ငွေ ([0-9.,]+)Ks အား လွှပေးမှု အောင်မြင်ပါသည်။ ဝန်ဆောင်ခ: [0-9.,]+Ks လုပ်ဆောင်မှုအမှတ်: (\\w+) ([0-9-]+ [0-9:]+)",
-      "fields": [
-        "pay_phone",
-        "pay_money",
-        "pay_order_num",
-        "bank_time"
-      ]
+      "pattern": "(?<pay_phone>\\d+) ထံသို ငွေ (?<pay_money>[0-9.,]+)Ks အား လွှပေးမှု အောင်မြင်ပါသည်။ ဝန်ဆောင်ခ: [0-9.,]+Ks လုပ်ဆောင်မှုအမှတ်: (?<pay_order_num>\\w+) (?<bank_time>[0-9-]+ [0-9:]+)"
     },
     {
       "channel": "9004",
-      "pattern": "You have received ([0-9.,]+) MMK from ([0-9+]+) on ([0-9a-zA-Z-]+ [0-9:]+). Your Account Balance is [0-9.,]+ MMK. Transaction ID (\\w+)",
-      "fields": [
-        "pay_money",
-        "pay_phone",
-        "bank_time",
-        "pay_order_num"
-      ]
+      "pattern": "You have received (?<pay_money>[0-9.,]+) MMK from (?<pay_phone>[0-9+]+) on (?<bank_time>[0-9a-zA-Z-]+ [0-9:]+). Your Account Balance is [0-9.,]+ MMK. Transaction ID (?<pay_order_num>\\w+)"
     },
     {
       "channel": "9005",
-      "pattern": "([0-9@/:]) ([0-9.,]+) จาก[^/]*/x(\\d+)เข้าx\\d+",
-      "fields": [
-        "bank_time",
-        "pay_money",
-        "pay_card_num"
-      ]
+      "pattern": "(?<bank_time>[0-9@/:]) (?<pay_money>[0-9.,]+) จาก[^/]*/x(?<pay_card_num>\\d+)เข้าx\\d+"
     },
     {
       "channel": "9005",
-      "pattern": "ถอน/โอนเงิน ([0-9.,]+)บ บ/ชx\\d+ ([0-9@/:])",
-      "fields": [
-        "pay_money",
-        "bank_time"
-      ]
+      "pattern": "ถอน/โอนเงิน (?<pay_money>[0-9.,]+)บ บ/ชx\\d+ (?<bank_time>[0-9@/:])"
     },
     {
       "channel": "9005",
-      "pattern": "([0-9@/:]) ([0-9.,]+) เข้าx\\d+",
-      "fields": [
-        "bank_time",
-        "pay_money"
-      ]
+      "pattern": "(?<bank_time>[0-9@/:]) (?<pay_money>[0-9.,]+) เข้าx\\d+"
     },
     {
       "channel": "9014",
-      "pattern": "Sacombank ([0-9/]* \\d*:\\d*)\\s*TK: \\d*\\s*PS: [+]([0-9,]*) VND\\s*[^:]*: [0-9,]* VND(\\s*.*? )?(\\d+)( CKN \\d*)?$",
-      "fields": [
-        "bank_time",
-        "pay_money",
-        "",
-        "pay_order_num",
-        ""
-      ]
+      "pattern": "Sacombank (?<bank_time>[0-9/]* \\d*:\\d*)\\s*TK: \\d*\\s*PS: [+](?<pay_money>[0-9,]*) VND\\s*[^:]*: [0-9,]* VND\\s*null (?<pay_order_num>\\d+)-.* CKN \\w*$"
+    },
+    {
+      "channel": "9014",
+      "pattern": "Sacombank (?<bank_time>[0-9/]* \\d*:\\d*)\\s*TK: \\d*\\s*PS: [+](?<pay_money>[0-9,]*) VND\\s*[^:]*: [0-9,]* VND\\s*(?<pay_order_num>\\d+)( \\w+)?( ?CKN)?( \\w*)?$"
+    },
+    {
+      "channel": "9014",
+      "pattern": "Sacombank (?<bank_time>[0-9/]* \\d*:\\d*)\\s*TK: \\d*\\s*PS: [+](?<pay_money>[0-9,]*) VND\\s*[^:]*: [0-9,]* VND(\\s*.*? )?(Id)?(?<pay_order_num>\\d+)( CKN \\d*)?$"
+    },
+    {
+      "channel": "9014",
+      "pattern": "Sacombank (?<bank_time>[0-9/]* \\d*:\\d*)\\s*TK: \\d*\\s*PS: [+](?<pay_money>[0-9,]*) VND\\s*[^:]*: [0-9,]* VND\\s*MBVCB[0-9.]*?(?<pay_order_num>\\d+)[.]C T tu"
     },
     {
       "channel": "9015",
-      "pattern": "ACB[:] TK \\d+[(]VND[)] [+] ([0-9,]+) luc ([0-9:/ ]+). So du [0-9,]+. GD[:] .+ (\\d+)$",
-      "fields": [
-        "pay_money",
-        "bank_time",
-        "pay_order_num"
-      ]
+      "pattern": "ACB: TK \\d+\\(VND\\) \\+ (?<pay_money>[0-9,]+) luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+\\. GD: (?<pay_order_num>\\d+)"
+    },
+    {
+      "channel": "9015",
+      "pattern": "ACB: TK \\d+\\(VND\\) \\+ (?<pay_money>[0-9,]+) luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+\\. GD: .* (?<pay_order_num>\\d+)$"
     },
     {
       "channel": "9016",
-      "pattern": "SD TK \\d+ [+]([0-9,]+)VND luc ([0-9: -]+). SD [0-9,]+VND. Ref .*?(\\d+)[.]CT",
-      "fields": [
-        "pay_money",
-        "bank_time",
-        "pay_order_num"
-      ]
+      "pattern": "SD TK \\d+ [+](?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9: -]+). SD [0-9,]+VND. Ref .*?(?<pay_order_num>\\d+)[.]CT"
+    },
+    {
+      "channel": "9016",
+      "pattern": "SD TK \\d+ [+](?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9: -]+). SD [0-9,]+VND. Ref .*?\\.(?<pay_order_num>\\d+)(-.*)?( \\w+)?$"
     },
     {
       "channel": "9017",
-      "pattern": "Quy khach da duoc nhan ([0-9.]+) VND .*[.] Noi dung: nap id (\\d+)[.] Ngay GD: ([0-9:/ ]+)[.]",
-      "fields": [
-        "pay_money",
-        "pay_order_num",
-        "bank_time"
-      ]
+      "pattern": "Quy khach da duoc nhan (?<pay_money>[0-9.]+) VND .*[.] Noi dung: nap id (?<pay_order_num>\\d+)[.] Ngay GD: (?<bank_time>[0-9:/ ]+)[.]"
+    },
+    {
+      "channel": "9018",
+      "pattern": "VietinBank:(?<bank_time>[0-9/: ]+)\\|TK:\\w+\\|GD:[+](?<pay_money>[0-9,]+)VND\\|SDC:[0-9,]+VND\\|ND:CT DEN:\\w+ MBVCB.*\\.(?<pay_order_num>\\d+)\\.CT"
+    },
+    {
+      "channel": "9018",
+      "pattern": "VietinBank:(?<bank_time>[0-9/: ]+)\\|TK:\\w+\\|GD:[+](?<pay_money>[0-9,]+)VND\\|SDC:[0-9,]+VND\\|ND:(CT DEN:\\w+ )?(?<pay_order_num>\\d+)"
+    },
+    {
+      "channel": "9019",
+      "pattern": "TK\\d+xxx\\d+ tai BIDV \\+(?<pay_money>[0-9,]+)VND vao (?<bank_time>[0-9/: ]+)\\. So du:[0-9,]+VND\\. ND: TKThe :\\w+, tai \\w+\\. (?<pay_order_num>\\d+)"
+    },
+    {
+      "channel": "9019",
+      "pattern": "TK\\d+xxx\\d+ tai BIDV \\+(?<pay_money>[0-9,]+)VND vao (?<bank_time>[0-9/: ]+)\\. So du:[0-9,]+VND\\. ND: [^.]* (?<pay_order_num>\\d+)$"
+    },
+    {
+      "channel": "9019",
+      "pattern": "TK\\d+xxx\\d+ tai BIDV \\+(?<pay_money>[0-9,]+)VND vao (?<bank_time>[0-9/: ]+)\\. So du:[0-9,]+VND\\. ND: TKThe :\\w+, tai VCB\\. MBVCB\\..*\\.(?<pay_order_num>\\d+)\\.CT"
+    },
+    {
+      "channel": "9020",
+      "pattern": "Quy khach da duoc nhan (?<pay_money>[0-9.]+) VND vao tai khoan .* Noi dung: (?<pay_order_num>\\d+)\\. Ngay GD: (?<bank_time>[0-9/: ]+)\\.$"
     }
   ],
   "servers": {
@@ -281,7 +252,10 @@
         "9014",
         "9015",
         "9016",
-        "9017"
+        "9017",
+        "9018",
+        "9019",
+        "9020"
       ]
     },
     "越南3": {
@@ -292,7 +266,10 @@
         "9014",
         "9015",
         "9016",
-        "9017"
+        "9017",
+        "9018",
+        "9019",
+        "9020"
       ]
     },
     "越南4": {
@@ -303,7 +280,10 @@
         "9014",
         "9015",
         "9016",
-        "9017"
+        "9017",
+        "9018",
+        "9019",
+        "9020"
       ]
     },
     "越南5": {
@@ -314,7 +294,10 @@
         "9014",
         "9015",
         "9016",
-        "9017"
+        "9017",
+        "9018",
+        "9019",
+        "9020"
       ]
     }
   }
