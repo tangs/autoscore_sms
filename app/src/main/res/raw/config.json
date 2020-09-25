@@ -58,6 +58,10 @@
     },
     {
       "channel": "9015",
+      "pattern": "ACB: TK \\d+\\(VND\\) \\+ (?<pay_money>[0-9,]+) luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+\\. GD: .*\\.(?<pay_order_num>\\d+)\\.CT"
+    },
+    {
+      "channel": "9015",
       "pattern": "ACB: TK \\d+\\(VND\\) \\+ (?<pay_money>[0-9,]+) luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+\\. GD: (?<pay_order_num>\\d+)"
     },
     {
@@ -86,7 +90,7 @@
     },
     {
       "channel": "9019",
-      "pattern": "TK\\d+xxx\\d+ tai BIDV \\+(?<pay_money>[0-9,]+)VND vao (?<bank_time>[0-9/: ]+)\\. So du:[0-9,]+VND\\. ND: TKThe :\\w+, tai \\w+\\. (?<pay_order_num>\\d+)"
+      "pattern": "TK\\d+xxx\\d+ tai BIDV \\+(?<pay_money>[0-9,]+)VND vao (?<bank_time>[0-9/: ]+)\\. So du:\\s?[0-9,]+VND\\. ND: TKThe :\\s?\\w+, tai \\w+\\.[ ]?(?<pay_order_num>\\d+)"
     },
     {
       "channel": "9019",
