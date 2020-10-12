@@ -106,7 +106,7 @@
     },
     {
       "channel": "9021",
-      "pattern": "TK \\d+\\.Sotien GD:\\+(?<pay_money>[0-9,]+)\\.So du:[0-9,]+(\\.MBVCB)?(\\.\\d+)*\\.(?<pay_order_num>\\d+)(\\.CT)?"
+      "pattern": "TK \\d+\\.So tien GD:\\+(?<pay_money>[0-9,]+)\\.So du:[0-9,]+(\\.MBVCB)?(\\.\\d+)*\\.(?<pay_order_num>\\d+)(\\.CT)?"
     }
   ],
   "servers": {
