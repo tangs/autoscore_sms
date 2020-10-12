@@ -40,6 +40,7 @@ import com.tangs.myapplication.ui.main.adapters.RecordAdapter;
 import com.tangs.myapplication.ui.main.data.config.Config;
 import com.tangs.myapplication.ui.main.data.config.Server;
 import com.tangs.myapplication.ui.main.utilities.Injection;
+import com.tangs.myapplication.ui.main.utilities.SmsParser;
 import com.tangs.myapplication.ui.main.utilities.StringHelper;
 import com.tangs.myapplication.ui.main.viewmodels.SettingViewModel;
 import com.tangs.myapplication.ui.main.viewmodels.SettingViewModelFactory;
@@ -166,6 +167,7 @@ public class SettingFragment extends Fragment {
                                                             if (activity != null) {
                                                                 activity.recreate();
                                                             }
+                                                            SmsParser.reset();
                                                         })
                                                         .setNegativeButton(android.R.string.cancel, null)
                                                         .show();

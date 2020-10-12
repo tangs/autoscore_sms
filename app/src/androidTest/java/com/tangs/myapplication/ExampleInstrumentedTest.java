@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.tangs.myapplication", appContext.getPackageName());
+        assertEquals("com.tangs.auto_score_sms", appContext.getPackageName());
     }
 }

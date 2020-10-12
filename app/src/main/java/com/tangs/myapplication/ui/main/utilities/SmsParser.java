@@ -57,6 +57,10 @@ public class SmsParser {
         return instance;
     }
 
+    public static void reset() {
+        instance = null;
+    }
+
     public Map<String, String> parseSms(String sender, String body) {
         if (sender == null || body == null) return null;
         body = body.replaceAll("\\s+", " ").trim();
