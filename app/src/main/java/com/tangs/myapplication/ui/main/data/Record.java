@@ -141,10 +141,10 @@ public class Record {
     }
 
     public String getUrl() {
-        if (BuildConfig.DEBUG) {
-//            return "http://39.154.62.72:80?" + params;
-            return "http://192.168.1.101:5678?" + params;
-        }
+//        if (BuildConfig.DEBUG) {
+////            return "http://39.154.62.72:80?" + params;
+//            return "http://192.168.1.101:5678?" + params;
+//        }
         return host + "?" + params;
     }
 

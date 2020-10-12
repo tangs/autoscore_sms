@@ -4,7 +4,14 @@
     <item
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:title="auto refresh"
+        android:id="@+id/action_sync"
+        android:icon="@android:drawable/ic_popup_sync"
+        android:title="sync"
+        app:showAsAction="always|withText" />
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="new"
         app:actionLayout="@layout/action_autorefresh"
         app:showAsAction="always|withText" />
 
@@ -13,7 +20,7 @@
         android:layout_height="wrap_content"
         android:title="dark"
         app:actionLayout="@layout/action_dark"
-        app:showAsAction="ifRoom|withText" />
+        app:showAsAction="always|withText" />
 
     <item
         android:id="@+id/action_clear"

@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">auto score sms</string>
-    <string name="auto_refresh">auto scroll</string>
+    <string name="app_name">auto score</string>
+    <string name="auto_refresh">new</string>
     <string name="dark_mode">dark</string>
     <string name="phone_number">phone number</string>
     <string name="platform">platform</string>
@@ -10,29 +10,7 @@
     <string name="delete_all_title">Delete all records?</string>
     <string name="delete_record_title">Delete this record?</string>
     <string name="get_phone_number_title">Replace phone number?</string>
-    <string-array name="platforms" tools:ignore="InconsistentArrays">
-        <item>"缅甸2"</item>
-        <item>"缅甸5"</item>
-        <item>"缅甸6"</item>
-        <item>"缅甸7"</item>
-        <item>"缅甸8"</item>
-        <item>"缅甸9"</item>
-        <item>"缅甸10"</item>
-        <item>"缅甸11"</item>
-        <item>"缅甸12"</item>
-        <item>"泰国1"</item>
-        <item>"泰国2"</item>
-        <item>"泰国3"</item>
-        <item>"泰国4"</item>
-        <item>"泰国5"</item>
-        <item>"泰国6"</item>
-        <item>"泰国7"</item>
-        <item>"泰国8"</item>
-        <item>"泰国9"</item>
-        <item>"泰国10"</item>
-        <item>"越南2"</item>
-        <item>"越南3"</item>
-        <item>"越南4"</item>
-        <item>"越南5"</item>
-    </string-array>
+    <string name="sync_config_title">Sync config?</string>
+    <string name="download_fail">Download fail.</string>
+    <string name="download_success">Download success.</string>
 </resources>

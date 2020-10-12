@@ -2,15 +2,18 @@ package com.tangs.myapplication.ui.main;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,6 +30,9 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.hjq.permissions.OnPermission;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadLargeFileListener;
+import com.liulishuo.filedownloader.FileDownloader;
 import com.tangs.auto_score_sms.R;
 import com.tangs.auto_score_sms.databinding.FragmentSettingBinding;
 import com.tangs.myapplication.ui.main.adapters.KArrayAdapter;
@@ -89,30 +95,101 @@ public class SettingFragment extends Fragment {
         assert context != null;
 
         viewModel.getDarkMode().observe(this, val -> {
-            if (val == dark.isChecked()) return;
+            if (dark == null || val == dark.isChecked()) return;
             dark.setChecked(val);
         });
         viewModel.getAutoRefresh().observe(this, val -> {
-            if (val == autoRefresh.isChecked()) return;
+            if (autoRefresh == null || val == autoRefresh.isChecked()) return;
             autoRefresh.setChecked(val);
         });
 
-        dark.setOnCheckedChangeListener((button, val) -> {
-            viewModel.setDarkMode(val);
-            context.recreate();
-        });
-        autoRefresh.setOnCheckedChangeListener((button, val) -> viewModel.setAutoRefresh(val));
+        if (dark != null) {
+            dark.setOnCheckedChangeListener((button, val) -> {
+                viewModel.setDarkMode(val);
+                context.recreate();
+            });
+        }
+        if (autoRefresh != null) {
+            autoRefresh.setOnCheckedChangeListener((button, val) -> viewModel.setAutoRefresh(val));
+        }
 
         binding.toolbar.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.action_clear) {
-                new MaterialAlertDialogBuilder(context)
-                        .setTitle("Delete all records?")
-                        .setPositiveButton(android.R.string.ok, (dialog, which) ->
-                                disposable.add(viewModel.deleteAll()
-                                .subscribeOn(Schedulers.io())
-                                .subscribe()))
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .show();
+            switch (item.getItemId()) {
+                case R.id.action_clear: {
+                    new MaterialAlertDialogBuilder(context)
+                            .setTitle("Delete all records?")
+                            .setPositiveButton(android.R.string.ok, (dialog, which) ->
+                                    disposable.add(viewModel.deleteAll()
+                                            .subscribeOn(Schedulers.io())
+                                            .subscribe()))
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .show();
+                }
+                return true;
+                case R.id.action_sync: {
+                    final EditText input = new EditText(context);
+                    input.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
+                    // /auto_score/config.json
+                    input.setText("http://13.251.16.111");
+                    new MaterialAlertDialogBuilder(context)
+                            .setView(input)
+                            .setTitle(getString(R.string.sync_config_title))
+                            .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                                String url = input.getText() + "/auto_score/config.json";
+                                FileDownloader.setup(context);
+                                FileDownloader.getImpl().create(url)
+                                        .setForceReDownload(true)
+                                        .setPath(context.getFilesDir().getPath(), true)
+                                        .setListener(new FileDownloadLargeFileListener() {
+                                            @Override
+                                            protected void pending(BaseDownloadTask task, long soFarBytes, long totalBytes) {
+
+                                            }
+
+                                            @Override
+                                            protected void progress(BaseDownloadTask task, long soFarBytes, long totalBytes) {
+
+                                            }
+
+                                            @Override
+                                            protected void paused(BaseDownloadTask task, long soFarBytes, long totalBytes) {
+
+                                            }
+
+                                            @Override
+                                            protected void completed(BaseDownloadTask task) {
+                                                new MaterialAlertDialogBuilder(context)
+                                                        .setTitle(R.string.download_success)
+                                                        .setPositiveButton(android.R.string.ok, (dialog, which) -> {
+                                                            Config.getInstance(context).refresh(context);
+                                                            Activity activity = getActivity();
+                                                            if (activity != null) {
+                                                                activity.recreate();
+                                                            }
+                                                        })
+                                                        .setNegativeButton(android.R.string.cancel, null)
+                                                        .show();
+                                            }
+
+                                            @Override
+                                            protected void error(BaseDownloadTask task, Throwable e) {
+                                                e.printStackTrace();
+                                                new MaterialAlertDialogBuilder(context)
+                                                        .setTitle(R.string.download_fail)
+                                                        .setPositiveButton(android.R.string.ok, null)
+                                                        .show();
+                                            }
+
+                                            @Override
+                                            protected void warn(BaseDownloadTask task) {
+
+                                            }
+                                        })
+                                        .start();
+                            })
+                            .setNegativeButton(android.R.string.cancel, null)
+                            .show();
+                }
                 return true;
             }
             return false;
@@ -131,10 +208,13 @@ public class SettingFragment extends Fragment {
                             }
                         }, throwable -> Log.e("user", "Unable to update username", throwable)
                 ));
+        List<String> platforms = Config.getInstance(getContext()).getPlatforms();
+        String[] strings = new String[platforms.size()];
+        platforms.toArray(strings);
         ArrayAdapter<String> adapter = new KArrayAdapter<>(
                 getContext(),
                 R.layout.dropdown_menu_popup_item,
-                getResources().getStringArray(R.array.platforms));
+                strings);
         binding.filledExposedDropdown.setAdapter(adapter);
         binding.records.setAdapter(recordsAdapter);
     }

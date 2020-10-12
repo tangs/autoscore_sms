@@ -11,4 +11,7 @@
     <string name="delete_all_title">ลบระเบียนทั้งหมดหรือไม่</string>
     <string name="delete_record_title">ลบบันทึกนี้หรือไม่</string>
     <string name="get_phone_number_title">แทนที่หมายเลขโทรศัพท์หรือไม่</string>
+    <string name="sync_config_title">การกำหนดค่าการซิงค์ ?</string>
+    <string name="download_fail">"ดาวน์โหลดล้มเหลว "</string>
+    <string name="download_success">"ดาวน์โหลดสำเร็จ "</string>
 </resources>

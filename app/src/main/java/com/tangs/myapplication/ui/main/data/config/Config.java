@@ -17,6 +17,7 @@ import java.util.Map;
 public class Config {
     public Map<String, Server> servers = new HashMap<>();
     public List<Rule> rules = new ArrayList<>();
+    public List<String> platforms = new ArrayList<>();
     private static Config config;
 
     public static Config getInstance(Context context) {
@@ -27,7 +28,8 @@ public class Config {
     }
 
     private Config(Context context) {
-        loadConfig(context);
+//        loadConfig(context);
+        refresh(context);
     }
 
     public Server getServer(String platform) {
@@ -36,12 +38,16 @@ public class Config {
         return server;
     }
 
-    private void loadConfig(Context context) {
-        String txt = JsonHelper.loadJSONFromAsset(context, R.raw.config);
+    public List<String> getPlatforms() {
+        return this.platforms;
+    }
+
+    private boolean loadConfig(JSONObject obj) {
         try {
-            JSONObject obj = new JSONObject(txt);
-            JSONObject servers = obj.getJSONObject("servers");
             this.servers.clear();
+            this.rules.clear();
+            this.platforms.clear();
+            JSONObject servers = obj.getJSONObject("servers");
             Iterator<String> it = servers.keys();
             while (it.hasNext()) {
                 String key = it.next();
@@ -53,6 +59,7 @@ public class Config {
                     server.platforms.add(platforms.getString(i));
                 }
                 this.servers.put(key, server);
+                this.platforms.add(key);
             }
 
             JSONArray rules = obj.getJSONArray("rules");
@@ -72,6 +79,14 @@ public class Config {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public void refresh(Context context) {
+        if (!loadConfig(JsonHelper.loadJSONFromFiles(context, "config.json"))) {
+            loadConfig(JsonHelper.loadJSONFromAsset(context, R.raw.config));
         }
     }
 

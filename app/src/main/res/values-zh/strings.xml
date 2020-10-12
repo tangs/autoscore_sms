@@ -11,4 +11,7 @@
     <string name="delete_all_title">删除所有记录？</string>
     <string name="delete_record_title">删除这条记录？</string>
     <string name="get_phone_number_title">替换手机号？</string>
+    <string name="sync_config_title">同步配置</string>
+    <string name="download_fail">下载失败</string>
+    <string name="download_success">下载成功</string>
 </resources>
