@@ -1,8 +1,5 @@
 package com.tangs.myapplication.ui.main.data.config;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Rule {
     public String channel;
     public String pattern;

@@ -1,6 +1,5 @@
 package com.tangs.myapplication.ui.main.utilities;
 
-import android.app.Application;
 import android.content.Context;
 import android.util.Pair;
 
@@ -8,12 +7,9 @@ import com.tangs.myapplication.ui.main.data.config.Config;
 import com.tangs.myapplication.ui.main.data.config.Rule;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
