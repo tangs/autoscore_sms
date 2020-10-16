@@ -180,6 +180,20 @@
         "9005"
       ]
     },
+    "泰国11": {
+      "url": "http://54.251.234.142/api/pay/payinfo",
+      "platforms": [
+        "9001",
+        "9005"
+      ]
+    },
+    "泰国12": {
+      "url": "http://54.251.222.206/api/pay/payinfo",
+      "platforms": [
+        "9001",
+        "9005"
+      ]
+    },
     "缅甸2": {
       "url": "http://18.138.53.121/api/pay/payinfo",
       "platforms": [

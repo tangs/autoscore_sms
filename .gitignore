@@ -13,6 +13,7 @@ app/release
 /captures
 .externalNativeBuild
 .cxx
+sycn_config.sh
 
 # Built application files
 *.apk
