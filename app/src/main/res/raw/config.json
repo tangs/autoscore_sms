@@ -274,6 +274,14 @@
         "9004"
       ]
     },
+    "缅甸昌盛": {
+      "url": "http://ht.njjdys.com:12321/api/pay/payinfo",
+      "platforms": [
+        "9002",
+        "9003",
+        "9004"
+      ]
+    },
     "越南2": {
       "url": "http://13.250.74.43/api/pay/payinfo",
       "platforms": [
