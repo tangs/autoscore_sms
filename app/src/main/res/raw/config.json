@@ -194,6 +194,13 @@
         "9005"
       ]
     },
+    "泰国13": {
+      "url": "http://54.151.147.247/api/pay/payinfo",
+      "platforms": [
+        "9001",
+        "9005"
+      ]
+    },
     "缅甸1": {
       "url": "http://129.226.153.90/api/pay/payinfo",
       "platforms": [
