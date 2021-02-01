@@ -107,6 +107,26 @@
     {
       "channel": "9021",
       "pattern": "TK \\d+\\.So tien GD:\\+(?<pay_money>[0-9,]+)\\.So du:[0-9,]+(\\.MBVCB)?(\\.\\d+)*\\.(?<pay_order_num>\\d+)(\\.CT)?"
+    },
+    {
+      "channel": "9025",
+      "pattern": "TK \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\. ND: NHAN TU \\d+ TRACE (?<pay_order_num>\\d+) ND \\w[^k].*"
+    },
+    {
+      "channel": "9025",
+      "pattern": "K \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\. ND: (?<payer_name>.*) chuyen tien"
+    },
+    {
+      "channel": "9026",
+      "pattern": "TK \\w+\\|GD: \\+(?<pay_money>[0-9,]+)VND (?<bank_time>[0-9/: ]+)\\|SD:[0-9,]+VND\\|ND:.*Ma gi\\s?ao dich/ Trace (4 )?(?<pay_order_num>\\d+) -\\d+"
+    },
+    {
+      "channel": "9026",
+      "pattern": "TK \\w+\\|GD: \\+(?<pay_money>[0-9,]+)VND (?<bank_time>[0-9/: ]+)\\|SD:[0-9,]+VND\\|ND: MBVCB \\d+ (?<pay_order_num>\\d+) VUONG KIM MA U chuyen tien CT tu \\d+ VUON G KIM MAU toi"
+    },
+    {
+      "channel": "9026",
+      "pattern": "TK \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\. ND: NHAN TU \\d+ TRACE (?<pay_order_num>\\d+) ND Ck"
     }
   ],
   "servers": {
@@ -301,7 +321,8 @@
         "9018",
         "9019",
         "9020",
-        "9021"
+        "9021",
+        "9026"
       ]
     },
     "新越南2": {
@@ -316,7 +337,8 @@
         "9018",
         "9019",
         "9020",
-        "9021"
+        "9021",
+        "9026"
       ]
     },
     "新越南3": {
@@ -331,7 +353,8 @@
         "9018",
         "9019",
         "9020",
-        "9021"
+        "9021",
+        "9026"
       ]
     },
     "越南2": {

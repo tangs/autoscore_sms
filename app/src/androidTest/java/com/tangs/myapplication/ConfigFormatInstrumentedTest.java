@@ -8,6 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.liulishuo.filedownloader.BaseDownloadTask;
 import com.liulishuo.filedownloader.FileDownloadLargeFileListener;
 import com.liulishuo.filedownloader.FileDownloader;
+import com.tangs.auto_score_sms.R;
 import com.tangs.myapplication.ui.main.utilities.JsonHelper;
 
 import org.json.JSONObject;
@@ -27,7 +28,7 @@ public class ConfigFormatInstrumentedTest {
     public void localConfigJsonFormatChecking() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        JSONObject obj = JsonHelper.loadJSONFromFiles(appContext, "config.json");
+        JSONObject obj = JsonHelper.loadJSONFromAsset(appContext, R.raw.config);
         assertNotNull(obj);
     }
 
