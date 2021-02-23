@@ -69,6 +69,10 @@
       "pattern": "ACB: TK \\d+\\(VND\\) \\+ (?<pay_money>[0-9,]+) luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+\\. GD: .* (?<pay_order_num>\\d+)$"
     },
     {
+      "channel": "9015",
+      "pattern": "ACB: TK \\d+\\(VND\\) \\+ (?<pay_money>[0-9,]+) luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+\\."
+    },
+    {
       "channel": "9016",
       "pattern": "SD TK \\d+ [+](?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9: -]+). SD [0-9,]+VND. Ref .*?(?<pay_order_num>\\d+)[.]CT"
     },
