@@ -171,57 +171,57 @@ public class RegexInstrumentedTest {
         assertEquals(map.get("pay_money"), "20000");
         assertEquals(map.get("type"), "9025");
         assertEquals(map.get("sms_phone_number"), "xxx");
-    }
 
-    private void check9026(Context context) {
-        SmsParser parser = SmsParser.getInstance(context);
-        String smsBody = "TK 4240xxxx4584|GD: +20,000VND 31/01/21 13:26|SD:270,003VND|ND: CHAU HOAI THANH chuyen tien - Ma gi ao dich/ Trace 998593 -4240167544584";
-        Map<String, String> map = parser.parseSms("xxx", smsBody);
+        smsBody = "TK 4240xxxx4584|GD: +20,000VND 31/01/21 13:26|SD:270,003VND|ND: CHAU HOAI THANH chuyen tien - Ma gi ao dich/ Trace 998593 -4240167544584";
+        map = parser.parseSms("xxx", smsBody);
         assertEquals(map.get("pay_order_num"), "998593");
         assertEquals(map.get("pay_money"), "20000");
-        assertEquals(map.get("type"), "9026");
+        assertEquals(map.get("type"), "9025");
         assertEquals(map.get("sms_phone_number"), "xxx");
 
         smsBody = "TK 4240xxxx4584|GD: +20,000VND 31/01/21 14:20|SD:290,003VND|ND: Chuyen tien - Ma giao dich/ Trace 4 48699 -4240167544584";
         map = parser.parseSms("xxx", smsBody);
         assertEquals(map.get("pay_order_num"), "48699");
         assertEquals(map.get("pay_money"), "20000");
-        assertEquals(map.get("type"), "9026");
+        assertEquals(map.get("type"), "9025");
         assertEquals(map.get("sms_phone_number"), "xxx");
 
         smsBody = "TK 4240xxxx4584|GD: +20,000VND 31/01/21 15:24|SD:290,003VND|ND: H 310121 15 25 12 781604 - Ma giao dich/ Trace 781604 -4240167544584";
         map = parser.parseSms("xxx", smsBody);
         assertEquals(map.get("pay_order_num"), "781604");
         assertEquals(map.get("pay_money"), "20000");
-        assertEquals(map.get("type"), "9026");
+        assertEquals(map.get("type"), "9025");
         assertEquals(map.get("sms_phone_number"), "xxx");
 
         smsBody = "TK 4240xxxx4584|GD: +20,000VND 31/01/21 15:27|SD:310,003VND|ND: VUONG KIM MAU Chuyen tien - Ma giao dich/ Trace 245060 -4240167544584";
         map = parser.parseSms("xxx", smsBody);
         assertEquals(map.get("pay_order_num"), "245060");
         assertEquals(map.get("pay_money"), "20000");
-        assertEquals(map.get("type"), "9026");
+        assertEquals(map.get("type"), "9025");
         assertEquals(map.get("sms_phone_number"), "xxx");
 
         smsBody = "TK 4240xxxx4584|GD: +50,000VND 31/01/21 15:46|SD:380,003VND|ND: Ck FT21032940062145 - Ma giao dich/ Trace 369426 -4240167544584";
         map = parser.parseSms("xxx", smsBody);
         assertEquals(map.get("pay_order_num"), "369426");
         assertEquals(map.get("pay_money"), "50000");
-        assertEquals(map.get("type"), "9026");
+        assertEquals(map.get("type"), "9025");
         assertEquals(map.get("sms_phone_number"), "xxx");
 
         smsBody = "TK 4240xxxx4584|GD: +20,000VND 31/01/21 15:34|SD:330,003VND|ND: MBVCB 969666571 088129 VUONG KIM MA U chuyen tien CT tu 1018705978 VUON G KIM MAU toi ";
         map = parser.parseSms("xxx", smsBody);
         assertEquals(map.get("pay_order_num"), "088129");
         assertEquals(map.get("pay_money"), "20000");
-        assertEquals(map.get("type"), "9026");
+        assertEquals(map.get("type"), "9025");
         assertEquals(map.get("sms_phone_number"), "xxx");
 
         smsBody = "TK 232385348 tai VPB +20,000VND luc 16:25 31/01/21. So du 90,000VND. ND: NHAN TU 4240167544584 TRACE 308437 ND Ck";
         map = parser.parseSms("xxx", smsBody);
         assertEquals(map.get("pay_order_num"), "308437");
         assertEquals(map.get("pay_money"), "20000");
-        assertEquals(map.get("type"), "9026");
+        assertEquals(map.get("type"), "9025");
         assertEquals(map.get("sms_phone_number"), "xxx");
+    }
+
+    private void check9026(Context context) {
     }
 }
