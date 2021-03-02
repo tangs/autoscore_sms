@@ -42,6 +42,22 @@
     },
     {
       "channel": "9014",
+      "pattern": "Sacombank (?<bank_time>[0-9/]* \\d*:\\d*)\\s*TK: \\d*\\s*PS: [+](?<pay_money>[0-9,]*) VND\\s*[^:]*: [0-9,]* VND\\s*null (?<payment_key>\\w{5})-.* CKN \\w*$"
+    },
+    {
+      "channel": "9014",
+      "pattern": "Sacombank (?<bank_time>[0-9/]* \\d*:\\d*)\\s*TK: \\d*\\s*PS: [+](?<pay_money>[0-9,]*) VND\\s*[^:]*: [0-9,]* VND\\s*(?<payment_key>\\w{5})( \\w+)?( ?CKN)?( \\w*)?$"
+    },
+    {
+      "channel": "9014",
+      "pattern": "Sacombank (?<bank_time>[0-9/]* \\d*:\\d*)\\s*TK: \\d*\\s*PS: [+](?<pay_money>[0-9,]*) VND\\s*[^:]*: [0-9,]* VND(\\s*.*? )?(Id)?(?<payment_key>\\w{5})( CKN \\d*)?$"
+    },
+    {
+      "channel": "9014",
+      "pattern": "Sacombank (?<bank_time>[0-9/]* \\d*:\\d*)\\s*TK: \\d*\\s*PS: [+](?<pay_money>[0-9,]*) VND\\s*[^:]*: [0-9,]* VND\\s*MBVCB[0-9.]*?(?<payment_key>\\w{5})[.]CT tu"
+    },
+    {
+      "channel": "9014",
       "pattern": "Sacombank (?<bank_time>[0-9/]* \\d*:\\d*)\\s*TK: \\d*\\s*PS: [+](?<pay_money>[0-9,]*) VND\\s*[^:]*: [0-9,]* VND\\s*null (?<pay_order_num>\\d+)-.* CKN \\w*$"
     },
     {
@@ -54,8 +70,21 @@
     },
     {
       "channel": "9014",
-      "pattern": "Sacombank (?<bank_time>[0-9/]* \\d*:\\d*)\\s*TK: \\d*\\s*PS: [+](?<pay_money>[0-9,]*) VND\\s*[^:]*: [0-9,]* VND\\s*MBVCB[0-9.]*?(?<pay_order_num>\\d+)[.]C T tu"
+      "pattern": "Sacombank (?<bank_time>[0-9/]* \\d*:\\d*)\\s*TK: \\d*\\s*PS: [+](?<pay_money>[0-9,]*) VND\\s*[^:]*: [0-9,]* VND\\s*MBVCB[0-9.]*?(?<pay_order_num>\\d+)[.]CT tu"
     },
+    {
+      "channel": "9015",
+      "pattern": "ACB: TK \\d+\\(VND\\) \\+ (?<pay_money>[0-9,]+) luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+\\. GD: .*\\.(?<payment_key>\\w{5})\\.CT"
+    },
+    {
+      "channel": "9015",
+      "pattern": "ACB: TK \\d+\\(VND\\) \\+ (?<pay_money>[0-9,]+) luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+\\. GD: .* (?<payment_key>\\w{5})$"
+    },
+    {
+      "channel": "9015",
+      "pattern": "ACB: TK \\d+\\(VND\\) \\+ (?<pay_money>[0-9,]+) luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+\\. GD: (?<payment_key>\\w{5}) (\\w+ )?GD"
+    },
+
     {
       "channel": "9015",
       "pattern": "ACB: TK \\d+\\(VND\\) \\+ (?<pay_money>[0-9,]+) luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+\\. GD: .*\\.(?<pay_order_num>\\d+)\\.CT"
@@ -71,6 +100,14 @@
     {
       "channel": "9015",
       "pattern": "ACB: TK \\d+\\(VND\\) \\+ (?<pay_money>[0-9,]+) luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+\\."
+    },
+    {
+      "channel": "9016",
+      "pattern": "SD TK \\d+ [+](?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9: -]+). SD [0-9,]+VND. Ref .*?(?<payment_key>\\w{5})[.]CT"
+    },
+    {
+      "channel": "9016",
+      "pattern": "SD TK \\d+ [+](?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9: -]+). SD [0-9,]+VND. Ref .*?\\.(?<payment_key>\\w{5})(-.*)?( \\w+)?$"
     },
     {
       "channel": "9016",
@@ -114,23 +151,51 @@
     },
     {
       "channel": "9025",
+      "pattern": "TK \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\..* ND:? (?<payment_key>\\w{5})(-|$)"
+    },
+    {
+      "channel": "9025",
+      "pattern": "TK \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\..* MBVCB\\.\\w+\\.\\w+\\.(?<payment_key>\\w{5})\\.C T tu"
+    },
+    {
+      "channel": "9025",
+      "pattern": "TK \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\..* TRACE \\w+ ND (?<payment_key>\\w{5}) \\w+$"
+    },
+    {
+      "channel": "9025",
+      "pattern": "TK \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\..* TRACE \\w+ N D (?<payment_key>\\w{5})(\\s|$)"
+    },
+    {
+      "channel": "9025",
+      "pattern": "TK \\w+\\|GD: \\+(?<pay_money>[0-9,]+)VND (?<bank_time>[0-9/: ]+)\\|SD:[0-9,]+VND\\|ND: (?<payment_key>\\w{5}) .*- Ma giao d ?ich/ Trace (4 )?(?<pay_order_num>\\d+) -\\d+"
+    },
+    {
+      "channel": "9025",
+      "pattern": "TK \\w+\\|GD: \\+(?<pay_money>[0-9,]+)VND (?<bank_time>[0-9/: ]+)\\|SD:[0-9,]+VND\\|ND: MBVCB \\d+ \\d+ (?<payment_key>\\w{5}) CT"
+    },
+    {
+      "channel": "9025",
       "pattern": "TK \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\. ND: NHAN TU \\d+ TRACE (?<pay_order_num>\\d+) ND \\w[^k].*"
     },
     {
       "channel": "9025",
-      "pattern": "K \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\. ND: (?<payer_name>.*) chuyen tien"
+      "pattern": "TK \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\. ND: (?<payer_name>.*) chuyen tien"
     },
     {
-      "channel": "9026",
+      "channel": "9025",
+      "pattern": "TK \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\. ND: NHAN TU \\d+ TRACE (?<pay_order_num>\\d+) ND Ck"
+    },
+    {
+      "channel": "9025",
       "pattern": "TK \\w+\\|GD: \\+(?<pay_money>[0-9,]+)VND (?<bank_time>[0-9/: ]+)\\|SD:[0-9,]+VND\\|ND:.*Ma gi\\s?ao dich/ Trace (4 )?(?<pay_order_num>\\d+) -\\d+"
     },
     {
-      "channel": "9026",
+      "channel": "9025",
       "pattern": "TK \\w+\\|GD: \\+(?<pay_money>[0-9,]+)VND (?<bank_time>[0-9/: ]+)\\|SD:[0-9,]+VND\\|ND: MBVCB \\d+ (?<pay_order_num>\\d+) VUONG KIM MA U chuyen tien CT tu \\d+ VUON G KIM MAU toi"
     },
     {
       "channel": "9026",
-      "pattern": "TK \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\. ND: NHAN TU \\d+ TRACE (?<pay_order_num>\\d+) ND Ck"
+      "pattern": "NamABank: TK \\d+ nop (?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\.ND: (mbvcb\\.\\d+\\.\\d+\\.)?(?<payment_key>\\w{5})(\\.ct)?(\\W|$)"
     }
   ],
   "servers": {
@@ -333,6 +398,7 @@
         "9019",
         "9020",
         "9021",
+        "9025",
         "9026"
       ]
     },
@@ -349,6 +415,7 @@
         "9019",
         "9020",
         "9021",
+        "9025",
         "9026"
       ]
     },
@@ -365,6 +432,7 @@
         "9019",
         "9020",
         "9021",
+        "9025",
         "9026"
       ]
     },

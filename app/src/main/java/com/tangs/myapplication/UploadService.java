@@ -16,6 +16,7 @@ import com.android.volley.Request;
 import com.android.volley.toolbox.RequestFuture;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.tangs.auto_score_sms.BuildConfig;
 import com.tangs.myapplication.ui.main.RecordDataSource;
 import com.tangs.myapplication.ui.main.data.LocalRecordDataSource;
 import com.tangs.myapplication.ui.main.data.LocalSharedPreferences;
@@ -65,6 +66,10 @@ public class UploadService extends Service {
             record.state = Record.STATE_WAIT_SERVER;
             updateRecord(disposable, dataSource, record);
             String url = record.getUrl();
+            if (BuildConfig.DEBUG) {
+                Log.i("url", url);
+                return;
+            }
             RequestFuture<String> future = RequestFuture.newFuture();
             StringRequest request = new StringRequest(Request.Method.GET, url, future, future);
             Volley.newRequestQueue(context).add(request);
