@@ -167,7 +167,7 @@
     },
     {
       "channel": "9025",
-      "pattern": "TK \\w+\\|GD: \\+(?<pay_money>[0-9,]+)VND (?<bank_time>[0-9/: ]+)\\|SD:[0-9,]+VND\\|ND: (?<payment_key>\\w{5}) .*- Ma giao d ?i ?ch/ Trace (4 )?(?<pay_order_num>\\d+) -\\d+"
+      "pattern": "TK \\w+\\|GD: \\+(?<pay_money>[0-9,]+)VND (?<bank_time>[0-9/: ]+)\\|SD:[0-9,]+VND\\|ND: (?<payment_key>\\w{5}) .*- Ma g ?i ?a ?o d ?i ?c ?h/ Trace (4 )?(?<pay_order_num>\\d+) -\\d+"
     },
     {
       "channel": "9025",
