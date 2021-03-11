@@ -199,7 +199,11 @@
     },
     {
       "channel": "9027",
-      "pattern": "EIB PGD MONG CAI TK \\d+ (?<bank_time>[0-9/: -]+) (?<payment_key>\\w{5})-\\d+-[0-9:]+ \\d+ (?<pay_money>[0-9,]+) VND SD [0-9,]+ VND"
+      "pattern": "EIB PGD MONG CAI TK \\d+ (?<bank_time>[0-9/: -]+) MBVCB\\.\\d+\\.\\d+\\.(?<payment_key>\\w{5})\\.CT .* (?<pay_money>[0-9,]+) VND SD [0-9,]+ VND"
+    },
+    {
+      "channel": "9027",
+      "pattern": "EIB PGD MONG CAI TK \\d+ (?<bank_time>[0-9/: -]+) (?<payment_key>\\w{5}) ?(-\\d+-[0-9:]+)?( \\w+)? (?<pay_money>[0-9,]+) VND SD [0-9,]+ VND"
     }
   ],
   "servers": {
