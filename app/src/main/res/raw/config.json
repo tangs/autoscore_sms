@@ -203,7 +203,7 @@
     },
     {
       "channel": "9027",
-      "pattern": "EIB PGD MONG CAI TK \\d+ (?<bank_time>[0-9/: -]+) (?<payment_key>\\w{5}) ?(-\\d+-[0-9:]+)?( \\w+)? (?<pay_money>[0-9,]+) VND SD [0-9,]+ VND"
+      "pattern": "\nEIB PGD MONG CAI TK \\d+ (?<bank_time>[0-9/: -]+)( NGUYEN THANH TIEN)? (?<payment_key>\\w{5}) ?(-\\d+-[0-9:]+)?( \\w+)? (?<pay_money>[0-9,]+) VND SD [0-9,]+ VND"
     }
   ],
   "servers": {
