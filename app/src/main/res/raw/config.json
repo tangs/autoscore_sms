@@ -151,6 +151,10 @@
     },
     {
       "channel": "9025",
+      "pattern": "TK \\w+\\|GD: \\+(?<pay_money>[0-9,]+)VND (?<bank_time>[0-9/: ]+)\\|SD:[0-9,]+VND\\|ND: (?<payment_key>\\w{5}) Tu\\:( \\w+)*$"
+    },
+    {
+      "channel": "9025",
       "pattern": "TK \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\..* ND:? (?<payment_key>\\w{5})(-|$)"
     },
     {
