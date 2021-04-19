@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.0"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.tangs.auto_score_sms"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 20
-        versionName "2.3"
+        versionCode 21
+        versionName "2.4"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
