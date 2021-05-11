@@ -155,11 +155,19 @@
     },
     {
       "channel": "9025",
+      "pattern": "TK \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\..* TRACE \\w+ ND:? (?<payment_key>[0-9a-zA-Z ]{6})(-|$)"
+    },
+    {
+      "channel": "9025",
       "pattern": "TK \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\..* ND:? (?<payment_key>\\w{5})(-|$)"
     },
     {
       "channel": "9025",
       "pattern": "TK \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\..* MBVCB\\.\\w+\\.\\w+\\.(?<payment_key>\\w{5})\\.C T tu"
+    },
+    {
+      "channel": "9025",
+      "pattern": "TK \\d+ tai VPB \\+(?<pay_money>[0-9,]+)VND luc (?<bank_time>[0-9/: ]+)\\. So du [0-9,]+VND\\..* TRACE \\w+ ND (?<payment_key>[a-zA-Z ]{6}) \\w+$"
     },
     {
       "channel": "9025",
