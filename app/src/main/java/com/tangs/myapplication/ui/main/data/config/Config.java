@@ -3,6 +3,7 @@ package com.tangs.myapplication.ui.main.data.config;
 import android.content.Context;
 
 import com.tangs.auto_score_sms.R;
+import com.tangs.myapplication.BuildConfig;
 import com.tangs.myapplication.ui.main.utilities.JsonHelper;
 
 import org.json.JSONArray;
@@ -39,6 +40,13 @@ public class Config {
     }
 
     public List<String> getPlatforms() {
+        if (BuildConfig.IS_MIANDIAN_13) {
+            List<String> list = new ArrayList();
+            if (this.platforms.contains("缅甸13")) {
+                list.add("缅甸13");
+            }
+            return list;
+        }
         return this.platforms;
     }
 

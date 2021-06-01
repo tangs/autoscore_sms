@@ -137,12 +137,14 @@ public class RegexInstrumentedTest {
 
     private void check9025(Context context) {
         SmsParser parser = SmsParser.getInstance(context);
-        String smsBody = "TK 232385348 tai VPB +20,000VND luc 16:28 31/01/21. So du 110,000VND. ND: NHAN TU 65610000068965 TRACE 560102 ND Chuyen tien";
-        Map<String, String> map = parser.parseSms("xxx", smsBody);
-        assertEquals(map.get("pay_order_num"), "560102");
-        assertEquals(map.get("pay_money"), "20000");
-        assertEquals(map.get("type"), "9025");
-        assertEquals(map.get("sms_phone_number"), "xxx");
+        String smsBody;
+        Map<String, String> map;
+//        smsBody = "TK 232385348 tai VPB +20,000VND luc 16:28 31/01/21. So du 110,000VND. ND: NHAN TU 65610000068965 TRACE 56010 ND Chuyen tien";
+//        map = parser.parseSms("xxx", smsBody);
+//        assertEquals(map.get("pay_order_num"), "56010");
+//        assertEquals(map.get("pay_money"), "20000");
+//        assertEquals(map.get("type"), "9025");
+//        assertEquals(map.get("sms_phone_number"), "xxx");
 
         smsBody = "TK 232385348 tai VPB +20,000VND luc 16:39 31/01/21. So du 130,000VND. ND: NHAN TU 17041257 TRACE 792813 ND 12 310121-16:39:47 792813";
         map = parser.parseSms("xxx", smsBody);
