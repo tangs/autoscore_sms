@@ -8,8 +8,8 @@ android {
         applicationId "com.tangs.auto_score_sms"
         minSdkVersion 16
         targetSdkVersion 30
-        versionCode 22
-        versionName "2.4.1"
+        versionCode 23
+        versionName "2.4.2"
         multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

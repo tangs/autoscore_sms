@@ -222,6 +222,16 @@
       "pattern": "OCB (?<bank_time>[0-9/: -]+) TK \\d+ \\(\\+\\) (?<pay_money>[0-9,]+) VND N/dung\\: (MBVCB\\.\\d+\\.\\d+)?(OCB;\\d+;)?(?<payment_key>\\w{5})[ .-]"
     }
   ],
+  "serversNew": {
+    "缅甸13": {
+      "url": "http://54.251.101.28/api/pay/payinfo",
+      "platforms": [
+        "9002",
+        "9003",
+        "9004"
+      ]
+    }
+  },
   "servers": {
     "泰国1": {
       "url": "http://18.140.97.213/api/pay/payinfo",
@@ -395,14 +405,6 @@
     },
     "缅甸12": {
       "url": "http://54.251.235.155/api/pay/payinfo",
-      "platforms": [
-        "9002",
-        "9003",
-        "9004"
-      ]
-    },
-    "缅甸13": {
-      "url": "http://54.251.101.28/api/pay/payinfo",
       "platforms": [
         "9002",
         "9003",

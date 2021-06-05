@@ -7,6 +7,7 @@ import com.tangs.myapplication.BuildConfig;
 import com.tangs.myapplication.ui.main.utilities.JsonHelper;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -40,14 +41,19 @@ public class Config {
     }
 
     public List<String> getPlatforms() {
+        List<String> list = new ArrayList();
         if (BuildConfig.IS_MIANDIAN_13) {
-            List<String> list = new ArrayList();
             if (this.platforms.contains("缅甸13")) {
                 list.add("缅甸13");
             }
-            return list;
+        } else {
+            for (String platform: this.platforms) {
+                if (!platform.equals("缅甸13")) {
+                    list.add(platform);
+                }
+            }
         }
-        return this.platforms;
+        return list;
     }
 
     private boolean loadConfig(JSONObject obj) {
@@ -55,20 +61,9 @@ public class Config {
             this.servers.clear();
             this.rules.clear();
             this.platforms.clear();
-            JSONObject servers = obj.getJSONObject("servers");
-            Iterator<String> it = servers.keys();
-            while (it.hasNext()) {
-                String key = it.next();
-                JSONObject obj1 = servers.getJSONObject(key);
-                Server server = new Server();
-                server.url = obj1.getString("url");
-                JSONArray platforms = obj1.getJSONArray("platforms");
-                for (int i = 0; i < platforms.length(); ++i) {
-                    server.platforms.add(platforms.getString(i));
-                }
-                this.servers.put(key, server);
-                this.platforms.add(key);
-            }
+
+            addServers(obj.getJSONObject("servers"));
+            addServers(obj.getJSONObject("serversNew"));
 
             JSONArray rules = obj.getJSONArray("rules");
             this.rules.clear();
@@ -90,6 +85,22 @@ public class Config {
             return false;
         }
         return true;
+    }
+
+    private void addServers(JSONObject servers) throws JSONException {
+        Iterator<String> it = servers.keys();
+        while (it.hasNext()) {
+            String key = it.next();
+            JSONObject obj1 = servers.getJSONObject(key);
+            Server server = new Server();
+            server.url = obj1.getString("url");
+            JSONArray platforms = obj1.getJSONArray("platforms");
+            for (int i = 0; i < platforms.length(); ++i) {
+                server.platforms.add(platforms.getString(i));
+            }
+            this.servers.put(key, server);
+            this.platforms.add(key);
+        }
     }
 
     public void refresh(Context context) {
