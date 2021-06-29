@@ -223,8 +223,8 @@
     }
   ],
   "serversNew": {
-    "缅甸13": {
-      "url": "http://54.251.101.28/api/pay/payinfo",
+    "缅甸2-1": {
+      "url": "http://54.251.101.28/api/sms/rechargeNotify",
       "platforms": [
         "9002",
         "9003",
