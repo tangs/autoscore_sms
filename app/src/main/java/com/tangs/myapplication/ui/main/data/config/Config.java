@@ -42,13 +42,13 @@ public class Config {
 
     public List<String> getPlatforms() {
         List<String> list = new ArrayList();
-        if (BuildConfig.IS_MIANDIAN_13) {
-            if (this.platforms.contains("缅甸13")) {
-                list.add("缅甸13");
+        if (BuildConfig.IS_MIANDIAN_2_1) {
+            if (this.platforms.contains("缅甸2-1")) {
+                list.add("缅甸2-1");
             }
         } else {
             for (String platform: this.platforms) {
-                if (!platform.equals("缅甸13")) {
+                if (!platform.equals("缅甸2-1")) {
                     list.add(platform);
                 }
             }

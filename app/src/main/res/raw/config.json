@@ -222,7 +222,7 @@
       "pattern": "OCB (?<bank_time>[0-9/: -]+) TK \\d+ \\(\\+\\) (?<pay_money>[0-9,]+) VND N/dung\\: (MBVCB\\.\\d+\\.\\d+)?(OCB;\\d+;)?(?<payment_key>\\w{5})[ .-]"
     }
   ],
-  "serversNew": {
+  "serversNew1": {
     "缅甸2-1": {
       "url": "http://54.251.101.28/api/sms/rechargeNotify",
       "platforms": [
