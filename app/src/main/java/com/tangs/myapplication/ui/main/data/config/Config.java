@@ -46,9 +46,13 @@ public class Config {
             if (this.platforms.contains("缅甸2-1")) {
                 list.add("缅甸2-1");
             }
+        }  else if (BuildConfig.IS_MIANDIAN_3_1) {
+            if (this.platforms.contains("缅甸3-1")) {
+                list.add("缅甸3-1");
+            }
         } else {
             for (String platform: this.platforms) {
-                if (!platform.equals("缅甸2-1")) {
+                if (!platform.equals("缅甸2-1") && !platform.equals("缅甸3-1")) {
                     list.add(platform);
                 }
             }
