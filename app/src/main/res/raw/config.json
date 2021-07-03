@@ -231,6 +231,14 @@
         "9004"
       ]
     },
+    "缅甸2-2": {
+      "url": "http://13.213.136.81/api/pay/payinfo",
+      "platforms": [
+        "9002",
+        "9003",
+        "9004"
+      ]
+    },
     "缅甸3-1": {
       "url": "http://18.141.91.88/api/pay/payinfo",
       "platforms": [

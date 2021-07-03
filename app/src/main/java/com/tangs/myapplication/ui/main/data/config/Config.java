@@ -43,16 +43,26 @@ public class Config {
     public List<String> getPlatforms() {
         List<String> list = new ArrayList();
         if (BuildConfig.IS_MIANDIAN_2_1) {
-            if (this.platforms.contains("缅甸2-1")) {
-                list.add("缅甸2-1");
+//            if (this.platforms.contains("缅甸2-1")) {
+//                list.add("缅甸2-1");
+//            }
+            for (String platform: this.platforms) {
+                if (platform.startsWith("缅甸2-")) {
+                    list.add(platform);
+                }
             }
         }  else if (BuildConfig.IS_MIANDIAN_3_1) {
-            if (this.platforms.contains("缅甸3-1")) {
-                list.add("缅甸3-1");
+//            if (this.platforms.contains("缅甸3-1")) {
+//                list.add("缅甸3-1");
+//            }
+            for (String platform: this.platforms) {
+                if (platform.startsWith("缅甸3-")) {
+                    list.add(platform);
+                }
             }
         } else {
             for (String platform: this.platforms) {
-                if (!platform.equals("缅甸2-1") && !platform.equals("缅甸3-1")) {
+                if (!platform.startsWith("缅甸2-") && !platform.startsWith("缅甸3-")) {
                     list.add(platform);
                 }
             }
