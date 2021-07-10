@@ -123,6 +123,18 @@
     },
     {
       "channel": "9018",
+      "pattern": "VietinBank:(?<bank_time>[0-9/: ]+)\\|TK:\\w+\\|GD:[+](?<pay_money>[0-9,]+)VND\\|SDC:[0-9,]+VND\\|ND:CT DEN:\\d+ MBVCB\\.\\d+\\.\\d+\\.(?<payment_key>\\w{5}).CT tu \\d+ LAM THAN~$"
+    },
+    {
+      "channel": "9018",
+      "pattern": "VietinBank:(?<bank_time>[0-9/: ]+)\\|TK:\\w+\\|GD:[+](?<pay_money>[0-9,]+)VND\\|SDC:[0-9,]+VND\\|ND:CT DEN:\\d+ (?<payment_key>\\w{5})(-\\w+-[0-9/: ]+)?( \\w+)?; tai Napas$"
+    },
+    {
+      "channel": "9018",
+      "pattern": "VietinBank:(?<bank_time>[0-9/: ]+)\\|TK:\\w+\\|GD:[+](?<pay_money>[0-9,]+)VND\\|SDC:[0-9,]+VND\\|ND:(?<payment_key>\\w{5}); tai iPay$"
+    },
+    {
+      "channel": "9018",
       "pattern": "VietinBank:(?<bank_time>[0-9/: ]+)\\|TK:\\w+\\|GD:[+](?<pay_money>[0-9,]+)VND\\|SDC:[0-9,]+VND\\|ND:CT DEN:\\w+ MBVCB.*\\.(?<pay_order_num>\\d+)\\.CT"
     },
     {
